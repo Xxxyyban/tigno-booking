@@ -1,6 +1,25 @@
+# Stage 1: Build Dependencies
+FROM composer:2.7 AS vendor
+
+WORKDIR /app
+
+# Copy dependency definitions
+COPY composer.json composer.lock ./
+
+# Install dependencies strictly without running scripts or autoloaders
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --ignore-platform-reqs \
+    --no-scripts \
+    --no-autoloader \
+    --no-plugins
+
+# Stage 2: Runtime Environment
 FROM php:8.2-apache
 
-# Install system dependencies & PHP extensions required by Laravel
+# Install system packages & PHP extensions required by Laravel
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -10,50 +29,35 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd
+    && docker-php-ext-install pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache mod_rewrite
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Set working directory inside container
 WORKDIR /var/www/html
 
-# Get latest Composer executable
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copy composer definition files first
-COPY composer.json composer.lock ./
-
-# Bypass memory constraints and allow plugin execution if needed
-ENV COMPOSER_MEMORY_LIMIT=-1
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-# Install dependencies with verbose output (-vvv) to log exact error if it fails
-RUN composer install \
-    --no-dev \
-    --no-scripts \
-    --no-autoloader \
-    --ignore-platform-reqs \
-    --no-interaction \
-    --prefer-dist \
-    --no-audit \
-    -vvv
-
-# Copy the rest of the application files
+# Copy application source code
 COPY . .
 
-# Generate optimized autoloader
-RUN composer dump-autoload --optimize --no-dev
+# Copy installed vendor packages from Stage 1
+COPY --from=vendor /app/vendor /var/www/html/vendor
 
-# Set proper ownership
+# Copy Composer binary for runtime artisan/dump-autoload execution
+COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
+
+# Generate optimized autoloader
+RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
+
+# Set permissions for Laravel storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Point Apache document root to Laravel's /public folder
+# Point Apache DocumentRoot to /public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
 
-# Configure directory permissions for Apache
+# Apache directory overrides
 RUN printf '<Directory /var/www/html/public>\n\
     Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
