@@ -534,7 +534,7 @@ tr:hover {
 <span>Dashboard</span>
 </a>
 
-<a href="{{ route('bookings.index') }}" class="nav-item">
+<a href="{{ route('admin.bookings.index') }}" class="nav-item">
 <i class="bi bi-calendar-check"></i>
 <span>Bookings</span>
 </a>
@@ -656,7 +656,7 @@ tr:hover {
 <div class="panel">
 <h4>
 <span>Recent Bookings</span>
-<a href="{{ route('bookings.index') }}" class="text-decoration-none" style="font-size: 0.8rem; color: #ff385c;">View All</a>
+<a href="{{ route('admin.bookings.index') }}" class="text-decoration-none" style="font-size: 0.8rem; color: #ff385c;">View All</a>
 </h4>
 
 <div class="table-responsive">
@@ -689,7 +689,7 @@ tr:hover {
 <h4>Quick Actions</h4>
 
 <div class="d-flex flex-column gap-2 mt-3">
-<a href="{{ route('bookings.index') }}" class="btn-modern">
+<a href="{{ route('admin.bookings.index') }}" class="btn-modern">
 <i class="bi bi-calendar-check me-2"></i> Manage Bookings
 </a>
 

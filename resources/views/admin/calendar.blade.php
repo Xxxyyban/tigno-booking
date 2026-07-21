@@ -423,7 +423,7 @@ body {
 <span>Dashboard</span>
 </a>
 
-<a href="{{ route('bookings.index') }}" class="nav-item">
+<a href="{{ route('admin.bookings.index') }}" class="nav-item">
 <i class="bi bi-calendar-check"></i>
 <span>Bookings</span>
 </a>

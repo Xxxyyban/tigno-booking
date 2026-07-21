@@ -489,7 +489,7 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="{{ route('bookings.index') }}" class="nav-item active">
+            <a href="{{ route('admin.bookings.index') }}" class="nav-item active">
                 <i class="bi bi-calendar-check"></i>
                 <span>Bookings</span>
             </a>
@@ -562,7 +562,7 @@
                         <i class="bi bi-pencil-square"></i>
                         Edit Booking Record
                     </h2>
-                    <a href="{{ route('bookings.index') }}" class="back-link">
+                    <a href="{{ route('admin.bookings.index') }}" class="back-link">
                         <i class="bi bi-arrow-left"></i> Return to Matrix
                     </a>
                 </div>
