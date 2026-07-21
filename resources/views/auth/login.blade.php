@@ -40,8 +40,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 20px 20px 40px 20px;
+            justify-content: center;
+            padding: 24px;
             position: relative;
             overflow-x: hidden;
         }
@@ -71,10 +71,11 @@
             max-width: 100%;
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 18px;
             backdrop-filter: blur(25px);
-            padding: 12px 28px;
-            margin-bottom: 25px;
+            -webkit-backdrop-filter: blur(25px);
+            padding: 12px 24px;
+            margin-bottom: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             z-index: 100;
         }
@@ -97,6 +98,7 @@
             background: var(--glass);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             border-radius: var(--radius-outer);
             overflow: hidden;
             box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, .1);
@@ -185,7 +187,7 @@
 
         .input-group-custom {
             position: relative;
-            margin-bottom: 16px;
+            margin-bottom: 4px;
         }
 
         .input-group-custom i {
@@ -242,13 +244,15 @@
         .error-msg {
             color: #ef4444;
             font-size: 12px;
-            margin-top: 5px;
+            margin-top: 4px;
+            margin-bottom: 8px;
         }
 
         /* Responsive Breakpoints */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .card-login {
                 grid-template-columns: 1fr;
+                width: 100%;
             }
             .right-panel {
                 border-left: none;
@@ -257,6 +261,9 @@
             }
             .left-panel {
                 padding: 40px 30px;
+            }
+            .custom-navbar {
+                width: 100%;
             }
         }
     </style>
