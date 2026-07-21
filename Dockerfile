@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd
 
-# Enable Apache mod_rewrite module
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
 # Set working directory inside container
@@ -21,11 +21,14 @@ WORKDIR /var/www/html
 # Get latest Composer executable
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy composer definition files first for layer caching
+# Copy composer definition files first
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies with safety flags to prevent interactive crashes or audit failures
+# Bypass memory constraints and allow plugin execution if needed
 ENV COMPOSER_MEMORY_LIMIT=-1
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Install dependencies with verbose output (-vvv) to log exact error if it fails
 RUN composer install \
     --no-dev \
     --no-scripts \
@@ -33,15 +36,16 @@ RUN composer install \
     --ignore-platform-reqs \
     --no-interaction \
     --prefer-dist \
-    --no-audit
+    --no-audit \
+    -vvv
 
 # Copy the rest of the application files
 COPY . .
 
-# Generate optimized autoloader after source code is copied
+# Generate optimized autoloader
 RUN composer dump-autoload --optimize --no-dev
 
-# Set proper ownership for storage and cache directories
+# Set proper ownership
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Point Apache document root to Laravel's /public folder
