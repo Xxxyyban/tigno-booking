@@ -37,16 +37,13 @@ Route::get('/setup-admin-now', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-
     $rooms = Room::all();
-
     $events = Event::all();
 
     return view('welcome', compact(
         'rooms',
         'events'
     ));
-
 })->name('welcome');
 
 
@@ -55,11 +52,8 @@ Route::get('/', function () {
 | START PAGE
 |--------------------------------------------------------------------------
 */
-
 Route::get('/start', function () {
-
     return view('start');
-
 })->name('start');
 
 
@@ -69,7 +63,6 @@ Route::get('/start', function () {
 | AUTH ROUTES
 |--------------------------------------------------------------------------
 */
-
 require __DIR__ . '/auth.php';
 
 
@@ -79,11 +72,8 @@ require __DIR__ . '/auth.php';
 | CUSTOM LOGIN PAGE
 |--------------------------------------------------------------------------
 */
-
 Route::get('/login-user', function () {
-
     return view('auth.login-user');
-
 })->name('login.user');
 
 
@@ -93,7 +83,6 @@ Route::get('/login-user', function () {
 | CUSTOMER REGISTER
 |--------------------------------------------------------------------------
 */
-
 Route::get('/customer/register', [
     RegisteredUserController::class,
     'create'
@@ -114,22 +103,14 @@ Route::post('/customer/register', [
 | DASHBOARD REDIRECT
 |--------------------------------------------------------------------------
 */
-
 Route::middleware('auth')->get('/dashboard', function () {
-
-
     if(auth()->user()->isAdmin()) {
-
         return redirect()
             ->route('admin.dashboard');
-
     }
-
 
     return redirect()
         ->route('customer.dashboard');
-
-
 })->name('dashboard');
 
 
@@ -141,34 +122,21 @@ Route::middleware('auth')->get('/dashboard', function () {
 | ADMIN PANEL
 |--------------------------------------------------------------------------
 */
-
 Route::middleware('auth')->group(function () {
-
-
 
     /*
     |--------------------------------------------------------------------------
     | ADMIN DASHBOARD
     |--------------------------------------------------------------------------
     */
-
     Route::get('/admin/dashboard', function () {
-
-
         abort_unless(
             auth()->user()->isAdmin(),
             403
         );
 
-
         return view('admin.admin-home');
-
-
     })->name('admin.dashboard');
-
-
-
-
 
 
     /*
@@ -176,25 +144,14 @@ Route::middleware('auth')->group(function () {
     | ADMIN CALENDAR
     |--------------------------------------------------------------------------
     */
-
     Route::get('/admin/calendar', function () {
-
-
         abort_unless(
             auth()->user()->isAdmin(),
             403
         );
 
-
         return view('admin.calendar');
-
-
     })->name('admin.calendar');
-
-
-
-
-
 
 
     /*
@@ -202,62 +159,39 @@ Route::middleware('auth')->group(function () {
     | CALENDAR EVENTS
     |--------------------------------------------------------------------------
     */
-
     Route::get('/admin/bookings/events', function () {
-
-
         abort_unless(
             auth()->user()->isAdmin(),
             403
         );
 
-
-
         return \App\Models\Booking::all()
             ->map(function ($booking) {
-
-
                 return [
-
                     'title' =>
                         $booking->room_type .
                         ' | ' .
                         ($booking->place ?? 'N/A'),
 
-
                     'start' =>
                         $booking->booking_datetime,
-
 
                     'end' =>
                         $booking->end_datetime,
 
-
                     'color' =>
                         '#ff385c',
-
                 ];
-
-
             });
-
-
     })->name('admin.events');
-
-
-
-
-
 
 
     /*
     |--------------------------------------------------------------------------
-    | BOOKING CRUD
+    | BOOKING CRUD (Flat 'bookings.*' naming convention)
     |--------------------------------------------------------------------------
     */
-
-    Route::resource('admin/bookings', BookingController::class)->names('admin.bookings');
-
+    Route::resource('admin/bookings', BookingController::class)->names('bookings');
 
 });
 
@@ -272,37 +206,21 @@ Route::middleware('auth')->group(function () {
 | CUSTOMER SYSTEM
 |--------------------------------------------------------------------------
 */
-
 Route::middleware('auth')->group(function () {
-
-
-
 
     /*
     |--------------------------------------------------------------------------
     | CUSTOMER DASHBOARD
     |--------------------------------------------------------------------------
     */
-
     Route::get('/customer/dashboard', function () {
-
-
         abort_unless(
             auth()->user()->isCustomer(),
             403
         );
 
-
         return view('dashboard');
-
-
     })->name('customer.dashboard');
-
-
-
-
-
-
 
 
     /*
@@ -310,30 +228,17 @@ Route::middleware('auth')->group(function () {
     | BOOKING PROCESS
     |--------------------------------------------------------------------------
     */
-
     Route::prefix('booking')->group(function () {
-
-
-
 
         /*
         |--------------------------------------------------------------------------
         | START BOOKING
         |--------------------------------------------------------------------------
         */
-
         Route::get('/start', [
-
             TignoBookingController::class,
             'start'
-
         ])->name('booking.start');
-
-
-
-
-
-
 
 
         /*
@@ -341,39 +246,22 @@ Route::middleware('auth')->group(function () {
         | DETAILS
         |--------------------------------------------------------------------------
         */
-
         Route::get('/details', function () {
-
-
             abort_unless(
                 auth()->user()->isCustomer(),
                 403
             );
 
-
             return app(
                 TignoBookingController::class
             )->showDetails();
-
-
-
         })->name('booking.details');
 
 
-
-
         Route::post('/details', [
-
             TignoBookingController::class,
             'storeDetails'
-
         ])->name('booking.details.store');
-
-
-
-
-
-
 
 
         /*
@@ -381,30 +269,16 @@ Route::middleware('auth')->group(function () {
         | CONFIRMATION
         |--------------------------------------------------------------------------
         */
-
         Route::get('/confirmation', [
-
             TignoBookingController::class,
             'showConfirmation'
-
         ])->name('booking.confirmation');
 
 
-
-
-
         Route::post('/confirmation', [
-
             TignoBookingController::class,
             'uploadConfirmation'
-
         ])->name('booking.confirmation.store');
-
-
-
-
-
-
 
 
         /*
@@ -412,19 +286,11 @@ Route::middleware('auth')->group(function () {
         | SUMMARY
         |--------------------------------------------------------------------------
         */
-
         Route::get('/summary', [
-
             TignoBookingController::class,
             'summary'
-
         ])->name('booking.summary');
 
-
-
-
     });
-
-
 
 });
