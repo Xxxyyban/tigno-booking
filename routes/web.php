@@ -6,6 +6,31 @@ use App\Http\Controllers\TignoBookingController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\Room;
 use App\Models\Event;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+/*
+|--------------------------------------------------------------------------
+| TEMPORARY ADMIN CREATION (RUN ONCE THEN DELETE)
+|--------------------------------------------------------------------------
+*/
+Route::get('/setup-admin-now', function () {
+    $user = User::firstOrCreate(
+        ['email' => 'admin@tigno.com'],
+        [
+            'name' => 'Admin User',
+            'password' => Hash::make('angelo123'),
+            'role' => 'admin'
+        ]
+    );
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Admin user is ready!',
+        'user' => $user
+    ]);
+});
+
 /*
 |--------------------------------------------------------------------------
 | WELCOME PAGE
