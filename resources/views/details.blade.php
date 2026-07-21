@@ -304,11 +304,11 @@
     <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container-fluid p-0">
             <!-- Brand Logo -->
-            <a class="navbar-brand" href="{{ route('welcome') }}">
+            <a class="navbar-brand text-white text-decoration-none fw-bold fs-4" href="{{ route('welcome') }}">
                 <i class="bi bi-layers-half me-1"></i> Tigno
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="bi bi-list"></i>
             </button>
 
@@ -344,11 +344,11 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="start_time">Start Time</label>
-                        <input type="time" id="start_time" class="form-control">
+                        <input type="time" id="start_time" class="form-control" onchange="syncTimeInputs()">
                     </div>
                     <div class="col-md-6">
                         <label for="end_time">End Time</label>
-                        <input type="time" id="end_time" class="form-control">
+                        <input type="time" id="end_time" class="form-control" onchange="syncTimeInputs()">
                     </div>
                 </div>
 
@@ -460,9 +460,11 @@
         </div>
     </div>
 
+    <!-- JavaScript block with improved date range handling, dynamic UI updates, and synchronization -->
     <script>
         let startDate = null;
         let endDate = null;
+        let calendarInstance = null;
 
         document.addEventListener('DOMContentLoaded', function() {
             let today = new Date();
@@ -481,7 +483,7 @@
             ];
 
             let calendarEl = document.getElementById('calendar');
-            let calendar = new FullCalendar.Calendar(calendarEl, {
+            calendarInstance = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 height: 410,
                 selectable: true,
@@ -508,12 +510,13 @@
                         return;
                     }
 
-                    if (!startDate) {
+                    if (!startDate || (startDate && endDate)) {
                         startDate = info.dateStr;
+                        endDate = null;
                         showToast("Event Start: " + formatDate(startDate));
-                    } else if (!endDate) {
+                    } else if (startDate && !endDate) {
                         let startValidation = new Date(startDate + "T00:00:00");
-                        if(clickedDate < startValidation) {
+                        if (clickedDate < startValidation) {
                             startDate = info.dateStr;
                             endDate = null;
                             showToast("Reset Start: " + formatDate(startDate));
@@ -521,16 +524,80 @@
                             endDate = info.dateStr;
                             showToast("Event End: " + formatDate(endDate));
                         }
-                    } else {
-                        startDate = info.dateStr;
-                        endDate = null;
-                        showToast("Timeline Reset! Start: " + formatDate(startDate));
                     }
+
+                    highlightSelectedRange();
                     updatePreview();
                 }
             });
-            calendar.render();
+            calendarInstance.render();
+
+            // Check if old values exist on page load (e.g. after validation error)
+            let oldStart = document.getElementById('booking_datetime').value;
+            let oldEnd = document.getElementById('end_datetime').value;
+            if (oldStart) {
+                let parts = oldStart.split(' ');
+                startDate = parts[0];
+                if (parts[1]) {
+                    document.getElementById('start_time').value = parts[1].substring(0, 5);
+                }
+            }
+            if (oldEnd) {
+                let parts = oldEnd.split(' ');
+                endDate = parts[0];
+                if (parts[1]) {
+                    document.getElementById('end_time').value = parts[1].substring(0, 5);
+                }
+            }
+            if (startDate || endDate) {
+                highlightSelectedRange();
+                updatePreview();
+            }
         });
+
+        function highlightSelectedRange() {
+            if (!calendarInstance) return;
+            
+            // Remove existing custom highlights or select range styling if any
+            let dayEls = document.querySelectorAll('.fc-daygrid-day');
+            dayEls.forEach(el => {
+                el.style.backgroundColor = '';
+            });
+
+            if (startDate && endDate) {
+                let current = new Date(startDate);
+                let last = new Date(endDate);
+                while (current <= last) {
+                    let dateStr = current.toISOString().split('T')[0];
+                    let dayEl = document.querySelector(`.fc-daygrid-day[data-date="${dateStr}"]`);
+                    if (dayEl) {
+                        dayEl.style.backgroundColor = 'rgba(59, 130, 246, 0.25)';
+                    }
+                    current.setDate(current.getDate() + 1);
+                }
+            } else if (startDate) {
+                let dayEl = document.querySelector(`.fc-daygrid-day[data-date="${startDate}"]`);
+                if (dayEl) {
+                    dayEl.style.backgroundColor = 'rgba(255, 56, 92, 0.25)';
+                }
+            }
+        }
+
+        function syncTimeInputs() {
+            if (startDate) {
+                let startTime = document.getElementById('start_time').value;
+                if (startTime) {
+                    document.getElementById('booking_datetime').value = startDate + " " + startTime + ":00";
+                }
+            }
+            if (endDate) {
+                let endTime = document.getElementById('end_time').value;
+                if (endTime) {
+                    document.getElementById('end_datetime').value = endDate + " " + endTime + ":00";
+                }
+            }
+            updatePreview();
+        }
 
         function applySchedule() {
             let startTime = document.getElementById('start_time').value;
