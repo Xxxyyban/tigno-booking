@@ -470,7 +470,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>Linked Operational Event</label>
+                    <label>Events</label>
                     <select name="event_id" class="form-select" required>
                         <option value="">Choose Targeted Event</option>
                         @foreach($events as $event)
