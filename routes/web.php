@@ -256,9 +256,7 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::resource('bookings', BookingController::class);
-    });
+    Route::resource('admin/bookings', BookingController::class)->names('admin.bookings');
 
 
 });
