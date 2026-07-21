@@ -24,7 +24,7 @@ class BookingController extends Controller
     public function create()
     {
         $events = Event::all();
-        $user = auth()->user(); // Passed to ensure the view gets the logged-in user details
+        $user = auth()->user();
 
         return view('admin.bookings.create', compact('events', 'user'));
     }
@@ -46,10 +46,8 @@ class BookingController extends Controller
             'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        // Automatically assign the logged-in user ID
         $validated['user_id'] = auth()->id();
 
-        // Automatically use the logged-in user's name and email if not provided in request
         $currentUser = auth()->user();
         $fullName = $currentUser->name ?? 'Guest User';
         $validated['email'] = $currentUser->email ?? 'guest@example.com';
@@ -102,7 +100,6 @@ class BookingController extends Controller
             'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        // Retain user data association
         $currentUser = auth()->user();
         $fullName = $currentUser->name ?? 'Guest User';
         $validated['email'] = $currentUser->email ?? $booking->email;
