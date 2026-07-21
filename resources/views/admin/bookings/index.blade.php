@@ -66,7 +66,7 @@
         }
 
         /* =========================
-           SIDEBAR STYLING
+            SIDEBAR STYLING
         ========================= */
         .sidebar {
             width: var(--sidebar-width);
@@ -179,7 +179,7 @@
         }
 
         /* =========================
-           TOP NAVBAR STYLING
+            TOP NAVBAR STYLING
         ========================= */
         .admin-navbar {
             margin-left: var(--sidebar-width);
@@ -307,7 +307,7 @@
         }
 
         /* =========================
-           MAIN CONTENT AREA
+            MAIN CONTENT AREA
         ========================= */
         .main-content {
             margin-left: var(--sidebar-width);
@@ -371,7 +371,7 @@
         }
 
         /* =========================
-           CALENDAR PANEL (GLASS)
+            CALENDAR PANEL (GLASS)
         ========================= */
         .calendar-wrapper {
             background: var(--bg-surface);
@@ -449,7 +449,7 @@
         }
 
         /* =========================
-           DATA TABLE MATRIX
+            DATA TABLE MATRIX
         ========================= */
         .table-container {
             background: var(--bg-surface);
@@ -628,12 +628,12 @@
         </div>
 
         <nav class="nav-menu">
-            <a href="/admin/dashboard" class="nav-item">
+            <a href="{{ route('admin.dashboard') }}" class="nav-item">
                 <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="{{ route('bookings.index') }}" class="nav-item active">
+            <a href="{{ route('admin.bookings.index') }}" class="nav-item active">
                 <i class="bi bi-calendar-check"></i>
                 <span>Bookings</span>
             </a>
@@ -643,12 +643,12 @@
                 <span>Calendar Matrix</span>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="{{ route('admin.dashboard') }}" class="nav-item">
                 <i class="bi bi-people"></i>
                 <span>Client Users</span>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="{{ route('admin.dashboard') }}" class="nav-item">
                 <i class="bi bi-gear"></i>
                 <span>System Config</span>
             </a>
@@ -777,15 +777,15 @@
                                     </td>
                                     <td>
                                         <div class="action-group">
-                                            <a href="{{ route('bookings.show',$booking->id) }}" class="action-btn view" title="View Details">
+                                            <a href="{{ route('admin.bookings.show', $booking->id) }}" class="action-btn view" title="View Details">
                                                 <i class="bi bi-eye"></i>
                                             </a>
 
-                                            <a href="{{ route('bookings.edit',$booking->id) }}" class="action-btn edit" title="Modify Record">
+                                            <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="action-btn edit" title="Modify Record">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            <form method="POST" action="{{ route('bookings.destroy',$booking->id) }}" class="d-inline">
+                                            <form method="POST" action="{{ route('admin.bookings.destroy', $booking->id) }}" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="action-btn delete" title="Purge Record" onclick="return confirm('Are you sure you want to permanently delete this booking matrix record?')">
