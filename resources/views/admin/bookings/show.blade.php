@@ -467,7 +467,7 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="{{ route('bookings.index') }}" class="nav-item active">
+            <a href="{{ route('admin.bookings.index') }}" class="nav-item active">
                 <i class="bi bi-calendar-check"></i>
                 <span>Bookings</span>
             </a>
@@ -572,7 +572,7 @@
                     <div class="col-md-6">
                         <div class="row-box">
                             <strong>Contact Number</strong>
-                            <div class="value-text">{{ $booking->country_code }} {{ $booking->contact }}</div>
+                            <div class="value-text">{{ $booking->country_code ?? '' }} {{ $booking->contact }}</div>
                         </div>
                     </div>
                 </div>
@@ -615,7 +615,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <a href="{{ route('bookings.index') }}" class="btn-back">
+                    <a href="{{ route('admin.bookings.index') }}" class="btn-back">
                         <i class="bi bi-arrow-left"></i> Back to Bookings
                     </a>
                 </div>
