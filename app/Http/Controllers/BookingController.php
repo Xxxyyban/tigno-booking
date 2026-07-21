@@ -55,6 +55,7 @@ class BookingController extends Controller
         $validated['last_name'] = isset(explode(' ', trim($fullName), 2)[1]) ? explode(' ', trim($fullName), 2)[1] : '';
 
         if ($request->hasFile('receipt')) {
+            // Save clean relative path (e.g., receipts/filename.pdf) to database
             $validated['receipt'] = $request->file('receipt')->store('receipts', 'public');
         }
 
@@ -107,10 +108,12 @@ class BookingController extends Controller
         $validated['last_name'] = isset(explode(' ', trim($fullName), 2)[1]) ? explode(' ', trim($fullName), 2)[1] : '';
 
         if ($request->hasFile('receipt')) {
+            // Delete old file if it exists to prevent orphaned uploads
             if ($booking->receipt && Storage::disk('public')->exists($booking->receipt)) {
                 Storage::disk('public')->delete($booking->receipt);
             }
 
+            // Store new file and save clean relative path
             $validated['receipt'] = $request->file('receipt')->store('receipts', 'public');
         }
 
