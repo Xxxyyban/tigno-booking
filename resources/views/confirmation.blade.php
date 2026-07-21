@@ -41,10 +41,44 @@
             color: white;
             overflow-x: hidden;
             position: relative;
-            padding: 70px 25px;
+            padding: 100px 25px 70px 25px;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        /* FIXED GLASS-MORPHISM NAVBAR */
+        .custom-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(7, 11, 22, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+        }
+
+        .custom-navbar .navbar-brand {
+            font-weight: 800;
+            font-size: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .custom-navbar .navbar-brand i {
+            color: var(--primary);
+        }
+
+        .navbar-toggler {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         body::before {
@@ -291,7 +325,7 @@
         }
 
         @media(max-width: 1000px) {
-            body { padding: 35px 15px; }
+            body { padding: 85px 15px 35px 15px; }
             .booking-container { grid-template-columns: 1fr; gap: 25px; }
             .title { font-size: 35px; }
             .panel { padding: 25px!important; border-radius: 22px; }
@@ -299,12 +333,12 @@
     </style>
 </head>
 <body>
-     <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg custom-navbar">
-        <div class="container-fluid p-0">
+        <div class="container-fluid p-0 px-3">
             <!-- Brand Logo -->
             <a class="navbar-brand" href="{{ route('welcome') }}">
-                <i class="bi bi-layers-half me-1"></i> Tigno
+                <i class="bi bi-layers-half"></i> Tigno
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -421,5 +455,7 @@
 
     </div>
 
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

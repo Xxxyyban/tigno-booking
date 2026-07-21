@@ -49,7 +49,7 @@
             color: white;
             overflow-x: hidden;
             position: relative;
-            padding: 25px 25px 70px 25px; /* Reduced top padding to accommodate fixed navbar nicely */
+            padding: 0 25px 70px 25px; 
         }
 
         body::before {
@@ -80,16 +80,24 @@
             100% { transform: scale(1.1) rotate(-6deg); }
         }
 
-        /* FIXED GLASS NAVBAR STYLING */
+        /* FULLY FIXED GLASS NAVBAR STYLING */
         .custom-navbar {
-            background: rgba(7, 11, 22, 0.75) !important;
+            background: rgba(7, 11, 22, 0.85) !important;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             padding: 15px 30px;
-            margin: -25px -25px 35px -25px; /* Breaks out of body padding to stretch fully across */
+            width: 100%;
+        }
+
+        /* Spacer to push content down safely below the fixed navbar */
+        .navbar-spacer {
+            height: 95px;
         }
 
         .blob {
@@ -304,8 +312,9 @@
         .premium-toast.show { transform: translateX(-50%) translateY(0); }
 
         @media(max-width: 1000px) {
-            body { padding: 15px 15px 35px 15px; }
-            .custom-navbar { margin: -15px -15px 25px -15px; padding: 12px 20px; }
+            body { padding: 0 15px 35px 15px; }
+            .custom-navbar { padding: 12px 20px; }
+            .navbar-spacer { height: 80px; }
             .booking-container { grid-template-columns: 1fr; gap: 25px; }
             .title { font-size: 35px; }
             .panel { padding: 25px!important; border-radius: 22px; }
@@ -313,7 +322,7 @@
     </style>
 </head>
 <body>
-    <!-- FIXED NAVIGATION BAR -->
+    <!-- FULLY FIXED NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container-fluid">
             <!-- Brand Logo -->
@@ -349,6 +358,9 @@
             </div>
         </div>
     </nav>
+
+    <!-- Structural Spacer for Fixed Navbar -->
+    <div class="navbar-spacer"></div>
 
     <div class="blob one"></div>
     <div class="blob two"></div>
