@@ -38,13 +38,15 @@
 
         body {
             background: var(--bg-dark);
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 24px;
             position: relative;
+            overflow-x: hidden;
         }
 
         /* Fluid Animated Aurora Background Layers */
@@ -78,6 +80,30 @@
             0% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(-5%, 10%) scale(1.1); }
             100% { transform: translate(10%, -5%) scale(0.9); }
+        }
+
+        /* NAVIGATION BAR */
+        .custom-navbar {
+            width: 1060px;
+            max-width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 12px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .custom-navbar .navbar-brand {
+            font-size: 16px;
+            letter-spacing: 2px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            text-transform: uppercase;
         }
 
         /* Glassmorphism Card Wrapper */
@@ -330,121 +356,141 @@
             .right { border-left: none; border-top: 1px solid var(--card-border); padding: 32px; }
             .hero-headline-wrapper { margin: 32px 0; }
             h1 { font-size: 36px; margin-bottom: 24px; }
+            .custom-navbar { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<div class="login-card">
-
-    <!-- LEFT SIDE: PREMIUM BRAND THEATER -->
-    <div class="left">
-        <div class="brand-header">
-            <i class="bi bi-compass-fill"></i> Tigno Booking
-        </div>
-
-        <div class="hero-headline-wrapper">
-            <h1>Experience<br>the exceptional</h1>
-
-            <div class="feature-item">
-                <i class="bi bi-lightning-fill"></i>
-                <div>
-                    <span class="feature-title">Instant Reservations</span>
-                    <span class="feature-desc">Confirm luxury stays and premium listings in one click.</span>
-                </div>
-            </div>
-
-            <div class="feature-item">
-                <i class="bi bi-shield-check"></i>
-                <div>
-                    <span class="feature-title">End-to-End Security</span>
-                    <span class="feature-desc">Enterprise-grade data encryption covers every transactional layer.</span>
-                </div>
-            </div>
-
-            <div class="feature-item">
-                <i class="bi bi-sliders2"></i>
-                <div>
-                    <span class="feature-title">Tailored Portfolios</span>
-                    <span class="feature-desc">Access customizable configuration rules for administrative operations.</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="left-footer">
-            &copy; 2026 Tigno Luxury Group. All rights reserved.
-        </div>
-    </div>
-
-    <!-- RIGHT SIDE: PREMIUM REGISTRATION LAYER -->
-    <div class="right">
-        <div class="login-box">
-            <h3>Welcome back</h3>
-            <p>Please enter your credentials to manage your dashboard.</p>
-
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                <!-- Email Input Field -->
-                <div class="glass-input-wrapper">
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="name@company.com"
-                        required
-                        autofocus
-                        class="form-control-glass"
-                    >
-                    <i class="bi bi-envelope field-icon"></i>
-                </div>
-
-                <!-- Password Input Field -->
-                <div class="glass-input-wrapper">
-                    <input
-                        type="password"
-                        name="password"
-                        id="passwordField"
-                        placeholder="Password"
-                        required
-                        class="form-control-glass"
-                    >
-                    <i class="bi bi-lock field-icon"></i>
-                    <!-- Toggle Visibility Icon -->
-                    <i class="bi bi-eye-slash password-toggle" id="passwordToggle"></i>
-                </div>
-
-                <button type="submit" class="btn-login">
-                    Sign In to Dashboard <i class="bi bi-arrow-right-short"></i>
-                </button>
-            </form>
-
-            <!-- Stripe / Apple Aesthetic Footer System Status -->
-            <div class="system-footer">
-                <span><i class="bi bi-check-circle-fill text-success"></i> Secure Node</span>
-                <span><i class="bi bi-cpu text-secondary"></i> 0.8ms Latency</span>
-                <span><i class="bi bi-globe2 text-secondary"></i> Global API</span>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Vanilla JS Password Visibility Switcher Engine -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const passwordField = document.getElementById('passwordField');
-        const passwordToggle = document.getElementById('passwordToggle');
-
-        passwordToggle.addEventListener('click', () => {
-            const isPassword = passwordField.type === 'password';
-            passwordField.type = isPassword ? 'text' : 'password';
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid p-0">
+            <a class="navbar-brand" href="{{ route('welcome') }}">
+                <i class="bi bi-layers-half me-1"></i> Tigno
+            </a>
             
-            // Toggle abstract design state glyph configurations seamlessly
-            passwordToggle.classList.toggle('bi-eye-slash', !isPassword);
-            passwordToggle.classList.toggle('bi-eye', isPassword);
-        });
-    });
-</script>
+            <button class="navbar-toggler text-white border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-4"></i>
+            </button>
 
+            <div class="collapse navbar-collapse" id="tignoNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- LOGIN CARD CONTAINER -->
+    <div class="login-card">
+
+        <!-- LEFT SIDE: PREMIUM BRAND THEATER -->
+        <div class="left">
+            <div class="brand-header">
+                <i class="bi bi-compass-fill"></i> Tigno Booking
+            </div>
+
+            <div class="hero-headline-wrapper">
+                <h1>Experience<br>the exceptional</h1>
+
+                <div class="feature-item">
+                    <i class="bi bi-lightning-fill"></i>
+                    <div>
+                        <span class="feature-title">Instant Reservations</span>
+                        <span class="feature-desc">Confirm luxury stays and premium listings in one click.</span>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <i class="bi bi-shield-check"></i>
+                    <div>
+                        <span class="feature-title">End-to-End Security</span>
+                        <span class="feature-desc">Enterprise-grade data encryption covers every transactional layer.</span>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <i class="bi bi-sliders2"></i>
+                    <div>
+                        <span class="feature-title">Tailored Portfolios</span>
+                        <span class="feature-desc">Access customizable configuration rules for administrative operations.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="left-footer">
+                &copy; 2026 Tigno Luxury Group. All rights reserved.
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE: PREMIUM LOGIN LAYER -->
+        <div class="right">
+            <div class="login-box">
+                <h3>Welcome back</h3>
+                <p>Please enter your credentials to manage your dashboard.</p>
+
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <!-- Email Input Field -->
+                    <div class="glass-input-wrapper">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="name@company.com"
+                            required
+                            autofocus
+                            class="form-control-glass"
+                        >
+                        <i class="bi bi-envelope field-icon"></i>
+                    </div>
+
+                    <!-- Password Input Field -->
+                    <div class="glass-input-wrapper">
+                        <input
+                            type="password"
+                            name="password"
+                            id="passwordField"
+                            placeholder="Password"
+                            required
+                            class="form-control-glass"
+                        >
+                        <i class="bi bi-lock field-icon"></i>
+                        <!-- Toggle Visibility Icon -->
+                        <i class="bi bi-eye-slash password-toggle" id="passwordToggle"></i>
+                    </div>
+
+                    <button type="submit" class="btn-login">
+                        Sign In to Dashboard <i class="bi bi-arrow-right-short"></i>
+                    </button>
+                </form>
+
+                <!-- Stripe / Apple Aesthetic Footer System Status -->
+                <div class="system-footer">
+                    <span><i class="bi bi-check-circle-fill text-success"></i> Secure Node</span>
+                    <span><i class="bi bi-cpu text-secondary"></i> 0.8ms Latency</span>
+                    <span><i class="bi bi-globe2 text-secondary"></i> Global API</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Vanilla JS Password Visibility Switcher Engine -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordField = document.getElementById('passwordField');
+            const passwordToggle = document.getElementById('passwordToggle');
+
+            passwordToggle.addEventListener('click', () => {
+                const isPassword = passwordField.type === 'password';
+                passwordField.type = isPassword ? 'text' : 'password';
+                
+                passwordToggle.classList.toggle('bi-eye-slash', !isPassword);
+                passwordToggle.classList.toggle('bi-eye', isPassword);
+            });
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
