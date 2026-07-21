@@ -1,296 +1,137 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\TignoBookingController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Models\Room;
+namespace App\Http\Controllers;
+
+use App\Models\Booking;
 use App\Models\Event;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-/*
-|--------------------------------------------------------------------------
-| TEMPORARY ADMIN CREATION (RUN ONCE THEN DELETE)
-|--------------------------------------------------------------------------
-*/
-Route::get('/setup-admin-now', function () {
-    $user = User::firstOrCreate(
-        ['email' => 'admin@tigno.com'],
-        [
-            'name' => 'Admin User',
-            'password' => Hash::make('angelo123'),
-            'role' => 'admin'
-        ]
-    );
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Admin user is ready!',
-        'user' => $user
-    ]);
-});
-
-/*
-|--------------------------------------------------------------------------
-| WELCOME PAGE
-|--------------------------------------------------------------------------
-*/
-Route::get('/', function () {
-    $rooms = Room::all();
-    $events = Event::all();
-
-    return view('welcome', compact(
-        'rooms',
-        'events'
-    ));
-})->name('welcome');
-
-
-/*
-|--------------------------------------------------------------------------
-| START PAGE
-|--------------------------------------------------------------------------
-*/
-Route::get('/start', function () {
-    return view('start');
-})->name('start');
-
-
-
-/*
-|--------------------------------------------------------------------------
-| AUTH ROUTES
-|--------------------------------------------------------------------------
-*/
-require __DIR__ . '/auth.php';
-
-
-
-/*
-|--------------------------------------------------------------------------
-| CUSTOM LOGIN PAGE
-|--------------------------------------------------------------------------
-*/
-Route::get('/login-user', function () {
-    return view('auth.login-user');
-})->name('login.user');
-
-
-
-/*
-|--------------------------------------------------------------------------
-| CUSTOMER REGISTER
-|--------------------------------------------------------------------------
-*/
-Route::get('/customer/register', [
-    RegisteredUserController::class,
-    'create'
-])->name('customer.register');
-
-
-Route::post('/customer/register', [
-    RegisteredUserController::class,
-    'store'
-])->name('customer.register.store');
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| DASHBOARD REDIRECT
-|--------------------------------------------------------------------------
-*/
-Route::middleware('auth')->get('/dashboard', function () {
-    if(auth()->user()->isAdmin()) {
-        return redirect()
-            ->route('admin.dashboard');
+class BookingController extends Controller
+{
+    /**
+     * ADMIN LIST
+     */
+    public function index()
+    {
+        $bookings = Booking::with('event')->latest()->get();
+        return view('admin.bookings.index', compact('bookings'));
     }
 
-    return redirect()
-        ->route('customer.dashboard');
-})->name('dashboard');
+    /**
+     * CREATE FORM
+     */
+    public function create()
+    {
+        $events = Event::all();
+        $user = auth()->user();
 
+        return view('admin.bookings.create', compact('events', 'user'));
+    }
 
+    /**
+     * STORE BOOKING
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'event_id' => 'required|exists:events,id',
+            'booking_id' => 'required|unique:bookings,booking_id',
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'contact' => 'required|string|max:20',
+            'booking_datetime' => 'required|date',
+            'end_datetime' => 'nullable|date|after:booking_datetime',
+            'guests' => 'required|integer|min:1',
+            'room_type' => 'required|string',
+            'notes' => 'nullable|string',
+            'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
 
+        $validated['user_id'] = auth()->id();
 
+        $fullName = $validated['full_name'];
+        $validated['first_name'] = explode(' ', trim($fullName), 2)[0];
+        $validated['last_name'] = isset(explode(' ', trim($fullName), 2)[1]) ? explode(' ', trim($fullName), 2)[1] : '';
 
-/*
-|--------------------------------------------------------------------------
-| ADMIN PANEL
-|--------------------------------------------------------------------------
-*/
-Route::middleware('auth')->group(function () {
+        if ($request->hasFile('receipt')) {
+            $validated['receipt'] = $request->file('receipt')->store('receipts', 'public');
+        }
 
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN DASHBOARD
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/admin/dashboard', function () {
-        abort_unless(
-            auth()->user()->isAdmin(),
-            403
-        );
+        Booking::create($validated);
 
-        return view('admin.admin-home');
-    })->name('admin.dashboard');
+        return redirect()->route('bookings.index')
+            ->with('success', 'Booking created successfully.');
+    }
 
+    /**
+     * SHOW SINGLE BOOKING
+     */
+    public function show(Booking $booking)
+    {
+        return view('admin.bookings.show', compact('booking'));
+    }
 
-    /*
-    |--------------------------------------------------------------------------
-    | ADMIN CALENDAR
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/admin/calendar', function () {
-        abort_unless(
-            auth()->user()->isAdmin(),
-            403
-        );
+    /**
+     * EDIT FORM
+     */
+    public function edit(Booking $booking)
+    {
+        $events = Event::all();
+        $user = auth()->user();
+        
+        return view('admin.bookings.edit', compact('booking', 'events', 'user'));
+    }
 
-        return view('admin.calendar');
-    })->name('admin.calendar');
+    /**
+     * UPDATE BOOKING
+     */
+    public function update(Request $request, Booking $booking)
+    {
+        $validated = $request->validate([
+            'event_id' => 'required|exists:events,id',
+            'booking_id' => 'required|unique:bookings,booking_id,' . $booking->id,
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'contact' => 'required|string|max:20',
+            'booking_datetime' => 'required|date',
+            'end_datetime' => 'nullable|date|after:booking_datetime',
+            'guests' => 'required|integer|min:1',
+            'room_type' => 'required|string',
+            'notes' => 'nullable|string',
+            'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
 
+        $fullName = $validated['full_name'];
+        $validated['first_name'] = explode(' ', trim($fullName), 2)[0];
+        $validated['last_name'] = isset(explode(' ', trim($fullName), 2)[1]) ? explode(' ', trim($fullName), 2)[1] : '';
 
-    /*
-    |--------------------------------------------------------------------------
-    | CALENDAR EVENTS
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/admin/bookings/events', function () {
-        abort_unless(
-            auth()->user()->isAdmin(),
-            403
-        );
+        if ($request->hasFile('receipt')) {
+            if ($booking->receipt && Storage::disk('public')->exists($booking->receipt)) {
+                Storage::disk('public')->delete($booking->receipt);
+            }
 
-        return \App\Models\Booking::all()
-            ->map(function ($booking) {
-                return [
-                    'title' =>
-                        $booking->room_type .
-                        ' | ' .
-                        ($booking->place ?? 'N/A'),
+            $validated['receipt'] = $request->file('receipt')->store('receipts', 'public');
+        }
 
-                    'start' =>
-                        $booking->booking_datetime,
+        $booking->update($validated);
 
-                    'end' =>
-                        $booking->end_datetime,
+        return redirect()->route('bookings.index')
+            ->with('success', 'Booking updated successfully.');
+    }
 
-                    'color' =>
-                        '#ff385c',
-                ];
-            });
-    })->name('admin.events');
+    /**
+     * DELETE BOOKING
+     */
+    public function destroy(Booking $booking)
+    {
+        if ($booking->receipt && Storage::disk('public')->exists($booking->receipt)) {
+            Storage::disk('public')->delete($booking->receipt);
+        }
 
+        $booking->delete();
 
-    /*
-    |--------------------------------------------------------------------------
-    | BOOKING CRUD WITH NAMESPACED ALIASES
-    |--------------------------------------------------------------------------
-    */
-    Route::resource('admin/bookings', BookingController::class)->names('bookings');
-
-});
-
-
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| CUSTOMER SYSTEM
-|--------------------------------------------------------------------------
-*/
-Route::middleware('auth')->group(function () {
-
-    /*
-    |--------------------------------------------------------------------------
-    | CUSTOMER DASHBOARD
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/customer/dashboard', function () {
-        abort_unless(
-            auth()->user()->isCustomer(),
-            403
-        );
-
-        return view('dashboard');
-    })->name('customer.dashboard');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | BOOKING PROCESS
-    |--------------------------------------------------------------------------
-    */
-    Route::prefix('booking')->group(function () {
-
-        /*
-        |--------------------------------------------------------------------------
-        | START BOOKING
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/start', [
-            TignoBookingController::class,
-            'start'
-        ])->name('booking.start');
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | DETAILS
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/details', function () {
-            abort_unless(
-                auth()->user()->isCustomer(),
-                403
-            );
-
-            return app(
-                TignoBookingController::class
-            )->showDetails();
-        })->name('booking.details');
-
-
-        Route::post('/details', [
-            TignoBookingController::class,
-            'storeDetails'
-        ])->name('booking.details.store');
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | CONFIRMATION
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/confirmation', [
-            TignoBookingController::class,
-            'showConfirmation'
-        ])->name('booking.confirmation');
-
-
-        Route::post('/confirmation', [
-            TignoBookingController::class,
-            'uploadConfirmation'
-        ])->name('booking.confirmation.store');
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | SUMMARY
-        |--------------------------------------------------------------------------
-        */
-        Route::get('/summary', [
-            TignoBookingController::class,
-            'summary'
-        ])->name('booking.summary');
-
-    });
-
-});
+        return redirect()->route('bookings.index')
+            ->with('success', 'Booking deleted successfully.');
+    }
+}
