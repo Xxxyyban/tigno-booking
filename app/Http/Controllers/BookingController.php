@@ -26,7 +26,6 @@ class BookingController extends Controller
         $events = Event::all();
         $user = auth()->user(); // Passed to ensure the view gets the logged-in user details
 
-        // Change this view path if your frontend view is located elsewhere (e.g., 'booking.create')
         return view('admin.bookings.create', compact('events', 'user'));
     }
 
@@ -63,7 +62,7 @@ class BookingController extends Controller
 
         Booking::create($validated);
 
-        return redirect()->route('bookings.index')
+        return redirect()->route('admin.bookings.index')
             ->with('success', 'Booking created successfully.');
     }
 
@@ -120,7 +119,7 @@ class BookingController extends Controller
 
         $booking->update($validated);
 
-        return redirect()->route('bookings.index')
+        return redirect()->route('admin.bookings.index')
             ->with('success', 'Booking updated successfully.');
     }
 
@@ -135,7 +134,7 @@ class BookingController extends Controller
 
         $booking->delete();
 
-        return redirect()->route('bookings.index')
+        return redirect()->route('admin.bookings.index')
             ->with('success', 'Booking deleted successfully.');
     }
 }
