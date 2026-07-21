@@ -37,8 +37,6 @@ class BookingController extends Controller
         $validated = $request->validate([
             'event_id' => 'required|exists:events,id',
             'booking_id' => 'required|unique:bookings,booking_id',
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
             'contact' => 'required|string|max:20',
             'booking_datetime' => 'required|date',
             'end_datetime' => 'nullable|date|after:booking_datetime',
@@ -50,9 +48,11 @@ class BookingController extends Controller
 
         $validated['user_id'] = auth()->id();
 
-        $fullName = $validated['full_name'];
-        $validated['first_name'] = explode(' ', trim($fullName), 2)[0];
-        $validated['last_name'] = isset(explode(' ', trim($fullName), 2)[1]) ? explode(' ', trim($fullName), 2)[1] : '';
+        $currentUser = auth()->user();
+        $fullName = $currentUser->name ?? 'Guest User';
+        $validated['email'] = $currentUser->email ?? 'guest@example.com';
+        $validated['first_name'] = $currentUser->first_name ?? explode(' ', trim($fullName), 2)[0];
+        $validated['last_name'] = $currentUser->last_name ?? (isset(explode(' ', trim($fullName), 2)[1]) ? explode(' ', trim($fullName), 2)[1] : '');
 
         if ($request->hasFile('receipt')) {
             $validated['receipt'] = $request->file('receipt')->store('receipts', 'public');
@@ -91,8 +91,6 @@ class BookingController extends Controller
         $validated = $request->validate([
             'event_id' => 'required|exists:events,id',
             'booking_id' => 'required|unique:bookings,booking_id,' . $booking->id,
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
             'contact' => 'required|string|max:20',
             'booking_datetime' => 'required|date',
             'end_datetime' => 'nullable|date|after:booking_datetime',
@@ -102,7 +100,9 @@ class BookingController extends Controller
             'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $fullName = $validated['full_name'];
+        $currentUser = auth()->user();
+        $fullName = $currentUser->name ?? 'Guest User';
+        $validated['email'] = $currentUser->email ?? $booking->email;
         $validated['first_name'] = explode(' ', trim($fullName), 2)[0];
         $validated['last_name'] = isset(explode(' ', trim($fullName), 2)[1]) ? explode(' ', trim($fullName), 2)[1] : '';
 
