@@ -16,8 +16,8 @@ RUN composer install \
     --no-autoloader \
     --no-plugins
 
-# Stage 2: Runtime Environment
-FROM php:8.2-apache
+# Stage 2: Runtime Environment (Updated to PHP 8.3)
+FROM php:8.3-apache
 
 # Install system packages & PHP extensions required by Laravel
 RUN apt-get update && apt-get install -y \
