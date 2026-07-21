@@ -41,10 +41,18 @@ class BookingController extends Controller
             'booking_datetime' => 'required|date',
             'end_datetime' => 'nullable|date|after:booking_datetime',
             'guests' => 'required|integer|min:1',
-            'room_type' => 'required|string', // 🔥 FIX ADDED
+            'room_type' => 'required|string',
             'notes' => 'nullable|string',
             'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
+
+        // Automatically assign the logged-in admin user ID
+        $validated['user_id'] = auth()->id();
+
+        // Split full_name into first_name and last_name to satisfy database migration
+        $nameParts = explode(' ', trim($validated['full_name']), 2);
+        $validated['first_name'] = $nameParts[0];
+        $validated['last_name'] = isset($nameParts[1]) ? $nameParts[1] : '';
 
         if ($request->hasFile('receipt')) {
             $validated['receipt'] = $request->file('receipt')->store('receipts', 'public');
@@ -87,13 +95,17 @@ class BookingController extends Controller
             'booking_datetime' => 'required|date',
             'end_datetime' => 'nullable|date|after:booking_datetime',
             'guests' => 'required|integer|min:1',
-            'room_type' => 'required|string', // 🔥 FIX ADDED
+            'room_type' => 'required|string',
             'notes' => 'nullable|string',
             'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        if ($request->hasFile('receipt')) {
+        // Split full_name into first_name and last_name for updates too
+        $nameParts = explode(' ', trim($validated['full_name']), 2);
+        $validated['first_name'] = $nameParts[0];
+        $validated['last_name'] = isset($nameParts[1]) ? $nameParts[1] : '';
 
+        if ($request->hasFile('receipt')) {
             if ($booking->receipt && Storage::disk('public')->exists($booking->receipt)) {
                 Storage::disk('public')->delete($booking->receipt);
             }
@@ -101,7 +113,7 @@ class BookingController extends Controller
             $validated['receipt'] = $request->file('receipt')->store('receipts', 'public');
         }
 
-        $booking->update($validated); // ✅ THIS MAKES UPDATE WORK
+        $booking->update($validated);
 
         return redirect()->route('bookings.index')
             ->with('success', 'Booking updated successfully.');
