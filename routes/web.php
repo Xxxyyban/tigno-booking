@@ -135,6 +135,8 @@ Route::middleware('auth')
 
         })->name('events');
 
+        Route::get('/bookings/{booking}/receipt', [BookingController::class, 'downloadReceipt'])->name('bookings.receipt');
+
         Route::resource('bookings', BookingController::class);
     });
 

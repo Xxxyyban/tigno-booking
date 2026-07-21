@@ -137,4 +137,16 @@ class BookingController extends Controller
         return redirect()->route('admin.bookings.index')
             ->with('success', 'Booking deleted successfully.');
     }
+
+    /**
+     * STREAM/DOWNLOAD RECEIPT VOUCHER SAFELY
+     */
+    public function downloadReceipt(Booking $booking)
+    {
+        if (!$booking->receipt || !Storage::disk('public')->exists($booking->receipt)) {
+            abort(404, 'Receipt file not found.');
+        }
+
+        return Storage::disk('public')->response($booking->receipt);
+    }
 }

@@ -688,7 +688,7 @@
                                     </td>
                                     <td>
                                         @if($booking->receipt)
-                                            <a href="{{ asset('storage/'.$booking->receipt) }}" target="_blank" class="file-link">
+                                            <a href="{{ route('admin.bookings.receipt', $booking) }}" target="_blank" class="file-link">
                                                 <i class="bi bi-file-earmark-text-fill"></i> View Document
                                             </a>
                                         @else
