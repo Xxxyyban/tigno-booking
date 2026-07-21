@@ -2,121 +2,600 @@
 <html lang="en">
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Manage Bookings</title>
+<title>Manage Bookings - Admin Dashboard</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- FULLCALENDAR -->
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
+<!-- FULLCALENDAR -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-        body{
-            background:#0f172a;
-            color:white;
-            font-family:'Segoe UI',sans-serif;
-            margin:0;
-            padding:40px;
-        }
+<style>
 
-        .container-box{
-            max-width:1400px;
-            margin:auto;
-        }
+/* =========================
+   GLOBAL & GLASSMORPHISM VIBE
+========================= */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top left, #1e1b4b, #0f172a, #090d16);
+    background-attachment: fixed;
+    color: #f8fafc;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
 
-        .header{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:25px;
-        }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.6);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
 
-        .btn-dashboard{
-            background:#2563eb;
-            color:white;
-            text-decoration:none;
-            padding:10px 18px;
-            border-radius:10px;
-        }
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+    width: 270px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 25px;
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+}
 
-        /* CALENDAR BOX */
-        #calendar {
-            background:white;
-            color:black;
-            padding:15px;
-            border-radius:12px;
-            margin-bottom:30px;
-        }
+.sidebar-brand {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(255, 56, 92, 0.3);
+}
 
-        .table-box{
-            background:rgba(255,255,255,.05);
-            backdrop-filter:blur(10px);
-            border-radius:20px;
-            overflow:hidden;
-            box-shadow:0 20px 50px rgba(0,0,0,.4);
-        }
+.sidebar-brand i {
+    color: #ff385c;
+    font-size: 1.4rem;
+}
 
-        table{
-            width:100%;
-            margin:0;
-        }
+.nav-menu {
+    flex-grow: 1;
+}
 
-        th{
-            background:#111827;
-            color:white;
-            font-weight:600;
-            padding:15px;
-        }
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-        td{
-            padding:15px;
-            vertical-align:middle;
-            border-bottom:1px solid rgba(255,255,255,.08);
-        }
+.nav-item i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
 
-        tr:hover{
-            background:rgba(255,255,255,.03);
-        }
+.nav-item:hover, .nav-item.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
 
-        .badge-room{
-            background:#ff385c;
-            padding:6px 12px;
-            border-radius:30px;
-            font-size:12px;
-        }
+.nav-item.active {
+    background: linear-gradient(135deg, rgba(255, 56, 92, 0.2), rgba(225, 29, 72, 0.1));
+    border-color: rgba(255, 56, 92, 0.3);
+    color: #ff859b;
+}
 
-        .action-btn{
-            padding:7px 12px;
-            border-radius:8px;
-            text-decoration:none;
-            color:white;
-            margin-right:5px;
-        }
+.sidebar-footer {
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
 
-        .view{ background:#2563eb; }
-        .edit{ background:#f59e0b; }
+/* =========================
+   ADMIN TOP NAVBAR
+========================= */
+.admin-navbar {
+    margin-left: 270px;
+    height: 80px;
+    padding: 0 35px;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
 
-        .delete{
-            background:#dc2626;
-            border:none;
-            padding:7px 12px;
-            border-radius:8px;
-            color:white;
-        }
+.admin-navbar-search {
+    position: relative;
+    width: 340px;
+}
 
-        form{ display:inline; }
+.admin-navbar-search input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 15px 10px 42px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
 
-    </style>
+.admin-navbar-search input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 56, 92, 0.5);
+    box-shadow: 0 0 15px rgba(255, 56, 92, 0.15);
+}
+
+.admin-navbar-search i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.admin-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.8);
+    position: relative;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.icon-btn .badge-dot {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 8px;
+    height: 8px;
+    background: #ff385c;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ff385c;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 15px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff385c, #9333ea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
+}
+
+.admin-info .name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.admin-info .role {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* =========================
+   MAIN CONTENT AREA
+========================= */
+.main {
+    margin-left: 270px;
+    padding: 35px;
+}
+
+.container-box {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-dashboard {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-dashboard:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+/* =========================
+   CALENDAR BOX (GLASS)
+========================= */
+#calendar {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* FullCalendar Dark Customization overrides */
+.fc {
+    --fc-page-bg-color: transparent;
+    --fc-neutral-bg-color: rgba(255, 255, 255, 0.03);
+    --fc-neutral-border-color: rgba(255, 255, 255, 0.08);
+    --fc-border-color: rgba(255, 255, 255, 0.08);
+    --fc-today-bg-color: rgba(255, 56, 92, 0.1);
+    --fc-event-bg-color: #ff385c;
+    --fc-event-border-color: #ff385c;
+    --fc-list-event-hover-bg-color: rgba(255, 255, 255, 0.06);
+    color: white;
+}
+
+.fc-toolbar-title {
+    font-size: 1.15rem !important;
+    font-weight: 600;
+}
+
+.fc-button {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 8px 14px !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.fc-button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.fc-button-active {
+    background: #ff385c !important;
+    border-color: #ff385c !important;
+}
+
+.fc-col-header-cell-cushion, .fc-daygrid-day-number {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* =========================
+   TABLE BOX
+========================= */
+.table-box {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+table {
+    width: 100%;
+    margin: 0;
+    color: white;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    background: rgba(15, 23, 42, 0.75);
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+td {
+    padding: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.88rem;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.badge-room {
+    background: linear-gradient(135deg, rgba(255, 56, 92, 0.2), rgba(225, 29, 72, 0.1));
+    border: 1px solid rgba(255, 56, 92, 0.3);
+    color: #ff859b;
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.action-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    margin-right: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+.view { 
+    background: rgba(37, 99, 235, 0.2); 
+    border: 1px solid rgba(37, 99, 235, 0.4); 
+    color: #60a5fa; 
+}
+.view:hover { background: rgba(37, 99, 235, 0.35); }
+
+.edit { 
+    background: rgba(245, 158, 11, 0.2); 
+    border: 1px solid rgba(245, 158, 11, 0.4); 
+    color: #fbbf24; 
+}
+.edit:hover { background: rgba(245, 158, 11, 0.35); }
+
+.delete {
+    background: rgba(220, 38, 38, 0.2);
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    color: #f87171;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.delete:hover {
+    background: rgba(220, 38, 38, 0.35);
+    transform: translateY(-2px);
+}
+
+form { display: inline; }
+
+.logout {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.logout:hover {
+    background: rgba(255, 56, 92, 0.15);
+    border-color: rgba(255, 56, 92, 0.3);
+    color: #ff859b;
+}
+
+/* Responsive tweaks */
+@media(max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        padding: 15px 10px;
+    }
+    .sidebar-brand span, .nav-item span {
+        display: none;
+    }
+    .admin-navbar, .main {
+        margin-left: 70px;
+    }
+    .admin-navbar {
+        padding: 0 15px;
+    }
+    .admin-navbar-search {
+        display: none;
+    }
+}
+
+</style>
 
 </head>
 
 <body>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+<div class="sidebar">
+
+<div class="sidebar-brand">
+<i class="bi bi-lightning-charge-fill"></i>
+<span>Admin Panel</span>
+</div>
+
+<div class="nav-menu">
+<a href="/admin/dashboard" class="nav-item">
+<i class="bi bi-speedometer2"></i>
+<span>Dashboard</span>
+</a>
+
+<a href="{{ route('bookings.index') }}" class="nav-item active">
+<i class="bi bi-calendar-check"></i>
+<span>Bookings</span>
+</a>
+
+<a href="{{ route('admin.calendar') }}" class="nav-item">
+<i class="bi bi-calendar3"></i>
+<span>Calendar</span>
+</a>
+
+<a href="#" class="nav-item">
+<i class="bi bi-people"></i>
+<span>Users</span>
+</a>
+
+<a href="#" class="nav-item">
+<i class="bi bi-gear"></i>
+<span>Settings</span>
+</a>
+</div>
+
+<div class="sidebar-footer">
+<form method="POST" action="{{ route('logout') }}">
+@csrf
+<button class="logout">
+<i class="bi bi-box-arrow-right"></i>
+<span>Logout</span>
+</button>
+</form>
+</div>
+
+</div>
+
+<!-- =========================
+     ADMIN TOP NAVBAR
+========================= -->
+<div class="admin-navbar">
+
+<div class="admin-navbar-search">
+<i class="bi bi-search"></i>
+<input type="text" placeholder="Search bookings, users, rooms...">
+</div>
+
+<div class="admin-nav-actions">
+<a href="#" class="icon-btn" title="Notifications">
+<i class="bi bi-bell"></i>
+<span class="badge-dot"></span>
+</a>
+
+<a href="#" class="icon-btn" title="Settings">
+<i class="bi bi-gear"></i>
+</a>
+
+<div class="admin-profile">
+<div class="admin-avatar">AD</div>
+<div class="admin-info d-none d-md-block">
+<div class="name">Administrator</div>
+<div class="role">System Manager</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+<div class="main">
 
 <div class="container-box">
 
@@ -124,8 +603,8 @@
     <div class="header">
 
         <h2>
-            <i class="bi bi-calendar-check"></i>
-            Admin Booking System
+            <i class="bi bi-calendar-check text-danger"></i>
+            Manage Bookings
         </h2>
 
         <a href="{{ route('admin.dashboard') }}" class="btn-dashboard">
@@ -135,14 +614,12 @@
 
     </div>
 
-    <!-- =========================
-         CALENDAR (NEW ADDITION)
-    ========================== -->
+    <!-- CALENDAR BOX -->
     <div id="calendar"></div>
 
     <!-- SUCCESS -->
     @if(session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success bg-success bg-opacity-20 border border-success border-opacity-25 text-white rounded-xl mb-4">
             {{ session('success') }}
         </div>
     @endif
@@ -150,103 +627,107 @@
     <!-- TABLE -->
     <div class="table-box">
 
-        <table class="table table-dark table-hover align-middle mb-0">
+        <div class="table-responsive">
+            <table>
 
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Booking ID</th>
-                    <th>Customer</th>
-                    <th>Email</th>
-                    <th>Contact</th>
-                    <th>Room</th>
-                    <th>Guests</th>
-                    <th>Event</th>
-                    <th>Schedule</th>
-                    <th>Receipt</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Booking ID</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Room</th>
+                        <th>Guests</th>
+                        <th>Event</th>
+                        <th>Schedule</th>
+                        <th>Receipt</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-            <tbody>
+                <tbody>
 
-            @forelse($bookings as $booking)
+                @forelse($bookings as $booking)
 
-                <tr>
+                    <tr>
 
-                    <td>{{ $booking->id }}</td>
-                    <td>{{ $booking->booking_id }}</td>
+                        <td>{{ $booking->id }}</td>
+                        <td><span class="font-monospace text-danger">#{{ $booking->booking_id }}</span></td>
 
-                    <td>{{ $booking->first_name }} {{ $booking->last_name }}</td>
-                    <td>{{ $booking->email }}</td>
-                    <td>{{ $booking->contact }}</td>
+                        <td>{{ $booking->first_name }} {{ $booking->last_name }}</td>
+                        <td>{{ $booking->email }}</td>
+                        <td>{{ $booking->contact }}</td>
 
-                    <td>
-                        <span class="badge-room">
-                            {{ $booking->room_type }}
-                        </span>
-                    </td>
+                        <td>
+                            <span class="badge-room">
+                                {{ $booking->room_type }}
+                            </span>
+                        </td>
 
-                    <td>{{ $booking->guests }}</td>
+                        <td>{{ $booking->guests }}</td>
 
-                    <td>{{ $booking->event?->name ?? 'N/A' }}</td>
+                        <td>{{ $booking->event?->name ?? 'N/A' }}</td>
 
-                    <td>
-                        {{ \Carbon\Carbon::parse($booking->booking_datetime)->format('M d, Y h:i A') }}
-                        <br>
-                        <small>
-                            → {{ \Carbon\Carbon::parse($booking->end_datetime)->format('M d, Y h:i A') }}
-                        </small>
-                    </td>
+                        <td>
+                            {{ \Carbon\Carbon::parse($booking->booking_datetime)->format('M d, Y h:i A') }}
+                            <br>
+                            <small class="text-white-50">
+                                → {{ \Carbon\Carbon::parse($booking->end_datetime)->format('M d, Y h:i A') }}
+                            </small>
+                        </td>
 
-                    <td>
-                        @if($booking->receipt)
-                            <a href="{{ asset('storage/'.$booking->receipt) }}" target="_blank">
-                                View File
+                        <td>
+                            @if($booking->receipt)
+                                <a href="{{ asset('storage/'.$booking->receipt) }}" target="_blank" class="text-decoration-none text-info">
+                                    <i class="bi bi-file-earmark-text"></i> View File
+                                </a>
+                            @else
+                                <span class="text-white-50">No File</span>
+                            @endif
+                        </td>
+
+                        <td>
+
+                            <a href="{{ route('bookings.show',$booking->id) }}" class="action-btn view" title="View">
+                                <i class="bi bi-eye"></i>
                             </a>
-                        @else
-                            No File
-                        @endif
-                    </td>
 
-                    <td>
+                            <a href="{{ route('bookings.edit',$booking->id) }}" class="action-btn edit" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
 
-                        <a href="{{ route('bookings.show',$booking->id) }}" class="action-btn view">
-                            <i class="bi bi-eye"></i>
-                        </a>
+                            <form method="POST" action="{{ route('bookings.destroy',$booking->id) }}">
+                                @csrf
+                                @method('DELETE')
 
-                        <a href="{{ route('bookings.edit',$booking->id) }}" class="action-btn edit">
-                            <i class="bi bi-pencil"></i>
-                        </a>
+                                <button class="delete" title="Delete" onclick="return confirm('Delete this booking?')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
 
-                        <form method="POST" action="{{ route('bookings.destroy',$booking->id) }}">
-                            @csrf
-                            @method('DELETE')
+                        </td>
 
-                            <button class="delete" onclick="return confirm('Delete this booking?')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
+                    </tr>
 
-                    </td>
+                @empty
 
-                </tr>
+                    <tr>
+                        <td colspan="11" class="text-center p-5 text-white-50">
+                            No bookings found.
+                        </td>
+                    </tr>
 
-            @empty
+                @endforelse
 
-                <tr>
-                    <td colspan="11" class="text-center p-5">
-                        No bookings found.
-                    </td>
-                </tr>
+                </tbody>
 
-            @endforelse
-
-            </tbody>
-
-        </table>
+            </table>
+        </div>
 
     </div>
+
+</div>
 
 </div>
 
@@ -261,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         initialView: 'dayGridMonth',
 
-        height: 500,
+        height: 520,
 
         events: '/admin/bookings/events',
 
