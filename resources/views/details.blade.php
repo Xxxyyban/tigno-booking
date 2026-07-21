@@ -341,19 +341,6 @@
                             <i class="bi bi-speedometer2 me-1 text-primary"></i> Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-semibold" href="{{ route('booking.start') }}">
-                            <i class="bi bi-calendar-plus me-1 text-primary"></i> New Booking
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2 fw-semibold">
-                                <i class="bi bi-box-arrow-right me-1"></i> Logout
-                            </button>
-                        </form>
-                    </li>
                 </ul>
             </div>
         </div>
