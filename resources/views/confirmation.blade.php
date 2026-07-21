@@ -337,7 +337,7 @@
     <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container-fluid p-0 px-3">
             <!-- Brand Logo -->
-            <a class="navbar-brand" href="{{ route('welcome') }}">
+            <a class="navbar-brand" href="{{ route('dashboard') }}">
                 <i class="bi bi-layers-half"></i> Tigno
             </a>
             
