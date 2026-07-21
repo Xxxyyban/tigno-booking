@@ -18,7 +18,7 @@
     <style>
         :root {
             --bg-base: #070b16;
-            --bg-surface: rgba(15, 23, 42, 0.7);
+            --bg-surface: rgba(15, 23, 42, 0.75);
             --bg-surface-hover: rgba(255, 255, 255, 0.06);
             --border-glass: rgba(255, 255, 255, 0.08);
             --border-glass-focus: rgba(255, 56, 92, 0.4);
@@ -191,86 +191,16 @@
             border-bottom: 1px solid var(--border-glass);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
             position: sticky;
             top: 0;
             z-index: 1030;
-        }
-
-        .admin-navbar-search {
-            position: relative;
-            width: 380px;
-        }
-
-        .admin-navbar-search input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-glass);
-            padding: 11px 16px 11px 44px;
-            border-radius: 14px;
-            color: white;
-            font-size: 0.88rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .admin-navbar-search input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .admin-navbar-search input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.07);
-            border-color: var(--border-glass-focus);
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-
-        .admin-navbar-search i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 1rem;
         }
 
         .admin-nav-actions {
             display: flex;
             align-items: center;
             gap: 16px;
-        }
-
-        .icon-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-glass);
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            position: relative;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .icon-btn:hover {
-            background: var(--bg-surface-hover);
-            border-color: rgba(255, 255, 255, 0.15);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .icon-btn .badge-dot {
-            position: absolute;
-            top: 11px;
-            right: 11px;
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary);
         }
 
         .admin-profile {
@@ -371,14 +301,14 @@
         }
 
         /* =========================
-            CALENDAR PANEL (GLASS)
+            CALENDAR PANEL (EXPANDED)
         ========================= */
         .calendar-wrapper {
             background: var(--bg-surface);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border-glass);
-            padding: 28px;
+            padding: 32px;
             border-radius: 24px;
             margin-bottom: 35px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -386,6 +316,7 @@
 
         #calendar {
             color: white;
+            min-height: 720px;
         }
 
         /* FullCalendar Custom Dark Overrides */
@@ -402,7 +333,7 @@
         }
 
         .fc-toolbar-title {
-            font-size: 1.25rem !important;
+            font-size: 1.4rem !important;
             font-weight: 700 !important;
             letter-spacing: -0.3px;
         }
@@ -434,18 +365,19 @@
             color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
-            padding: 8px !important;
+            font-size: 0.9rem;
+            padding: 10px !important;
         }
 
         .fc-event {
             border-radius: 8px !important;
-            padding: 3px 6px !important;
-            font-size: 0.78rem !important;
+            padding: 5px 8px !important;
+            font-size: 0.82rem !important;
             font-weight: 500 !important;
             border: none !important;
             background: linear-gradient(135deg, #ff385c, #e11d48) !important;
             box-shadow: 0 4px 12px rgba(255, 56, 92, 0.25);
+            cursor: pointer;
         }
 
         /* =========================
@@ -608,9 +540,6 @@
             .admin-navbar {
                 padding: 0 20px;
             }
-            .admin-navbar-search {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -669,19 +598,10 @@
        ADMIN TOP NAVIGATION BAR
     ========================= -->
     <header class="admin-navbar">
-        <div class="admin-navbar-search">
-            <i class="bi bi-search"></i>
-            <input type="text" placeholder="Global search bookings, users, or rooms...">
-        </div>
-
         <div class="admin-nav-actions">
             <a href="#" class="icon-btn" title="System Notifications">
                 <i class="bi bi-bell"></i>
                 <span class="badge-dot"></span>
-            </a>
-
-            <a href="#" class="icon-btn" title="Quick Settings">
-                <i class="bi bi-sliders"></i>
             </a>
 
             <div class="admin-profile">
@@ -713,9 +633,9 @@
                 </a>
             </div>
 
-            <!-- INTERACTIVE FULLCALENDAR MATRIX -->
+            <!-- INTERACTIVE FULLCALENDAR MATRIX (EXPANDED) -->
             <div class="calendar-wrapper">
-                <div id="calendar" style="height: 540px;"></div>
+                <div id="calendar"></div>
             </div>
 
             <!-- SUCCESS NOTIFICATION FEEDBACK -->
