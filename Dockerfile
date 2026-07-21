@@ -64,6 +64,15 @@ RUN printf '<Directory /var/www/html/public>\n\
     Require all granted\n\
 </Directory>\n' >> /etc/apache2/apache2.conf
 
+# Create startup entrypoint script directly inside the image
+RUN printf '#!/bin/sh\n\
+set -e\n\
+php artisan config:clear\n\
+php artisan migrate --force\n\
+exec "$@"\n' > /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 80
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
