@@ -16,7 +16,7 @@ RUN composer install \
     --no-autoloader \
     --no-plugins
 
-# Stage 2: Runtime Environment (Updated to PHP 8.3)
+# Stage 2: Runtime Environment
 FROM php:8.3-apache
 
 # Install system packages & PHP extensions required by Laravel
@@ -46,8 +46,8 @@ COPY --from=vendor /app/vendor /var/www/html/vendor
 # Copy Composer binary for runtime execution
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
-# Generate optimized autoloader safely without running artisan scripts
-RUN composer dump-autoload --optimize --no-dev --classmap-authoritative --no-scripts
+# Clear old cached package files and generate production autoloader
+RUN rm -f bootstrap/cache/*.php && composer dump-autoload --optimize --no-dev --classmap-authoritative
 
 # Set permissions for Laravel storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
