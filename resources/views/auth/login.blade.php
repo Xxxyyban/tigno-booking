@@ -151,7 +151,24 @@
 </head>
 
 <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid p-0">
+            <!-- Brand Logo -->
+            <a class="navbar-brand" href="{{ route('welcome') }}">
+                <i class="bi bi-layers-half me-1"></i> Tigno
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list"></i>
+            </button>
 
+            <div class="collapse navbar-collapse" id="tignoNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                </ul>
+            </div>
+        </div>
+    </nav>
 <div class="bg-glow"></div>
 <div class="bg-glow2"></div>
 
