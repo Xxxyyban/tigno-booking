@@ -393,7 +393,7 @@
     <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container-fluid p-0">
             <!-- Brand Logo -->
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('welcome') }}">
                 <i class="bi bi-layers-half me-1"></i> Tigno
             </a>
             
@@ -403,12 +403,6 @@
 
             <div class="collapse navbar-collapse" id="tignoNavbar">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('welcome') }}">Spaces</a>
-                    </li>
                     <li class="nav-item ms-lg-2">
                         <a href="{{ route('login.user') }}" class="nav-link px-2">Sign In</a>
                     </li>
