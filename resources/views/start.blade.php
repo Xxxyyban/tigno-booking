@@ -392,6 +392,7 @@
     <!-- NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container-fluid p-0">
+            <!-- Brand Logo -->
             <a class="navbar-brand" href="#">
                 <i class="bi bi-layers-half me-1"></i> Tigno
             </a>
@@ -401,27 +402,20 @@
             </button>
 
             <div class="collapse navbar-collapse" id="tignoNavbar">
-                <ul class="navbar-menu navbar-nav mx-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Spaces</a>
+                        <a class="nav-link" href="{{ route('welcome') }}">Spaces</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                    <li class="nav-item ms-lg-2">
+                        <a href="{{ route('login.user') }}" class="nav-link px-2">Sign In</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Support</a>
+                    <li class="nav-item ms-lg-2">
+                        <a href="{{ route('customer.register') }}" class="nav-btn d-inline-block">Get Started</a>
                     </li>
                 </ul>
-                <div class="d-flex align-items-center gap-2">
-                    <a href="{{ route('login.user') }}" class="nav-link px-2">Sign In</a>
-                    <a href="{{ route('customer.register') }}" class="nav-btn">Get Started</a>
-                </div>
             </div>
         </div>
     </nav>
