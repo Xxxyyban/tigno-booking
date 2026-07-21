@@ -43,11 +43,11 @@ COPY . .
 # Copy installed vendor packages from Stage 1
 COPY --from=vendor /app/vendor /var/www/html/vendor
 
-# Copy Composer binary for runtime artisan/dump-autoload execution
+# Copy Composer binary for runtime execution
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
-# Generate optimized autoloader
-RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
+# Generate optimized autoloader safely without running artisan scripts
+RUN composer dump-autoload --optimize --no-dev --classmap-authoritative --no-scripts
 
 # Set permissions for Laravel storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
