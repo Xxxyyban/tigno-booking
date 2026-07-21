@@ -60,7 +60,7 @@ class BookingController extends Controller
 
         Booking::create($validated);
 
-        return redirect()->route('bookings.index')
+        return redirect()->route('admin.bookings.index')
             ->with('success', 'Booking created successfully.');
     }
 
@@ -116,7 +116,7 @@ class BookingController extends Controller
 
         $booking->update($validated);
 
-        return redirect()->route('bookings.index')
+        return redirect()->route('admin.bookings.index')
             ->with('success', 'Booking updated successfully.');
     }
 
@@ -131,7 +131,7 @@ class BookingController extends Controller
 
         $booking->delete();
 
-        return redirect()->route('bookings.index')
+        return redirect()->route('admin.bookings.index')
             ->with('success', 'Booking deleted successfully.');
     }
 }

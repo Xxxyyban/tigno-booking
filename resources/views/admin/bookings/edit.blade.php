@@ -569,7 +569,7 @@
 
                 <hr class="enterprise-divider">
 
-                <form method="POST" action="{{ route('bookings.update', $booking->id) }}">
+                <form method="POST" action="{{ route('admin.bookings.update', $booking->id) }}">
                     @csrf
                     @method('PUT')
 
