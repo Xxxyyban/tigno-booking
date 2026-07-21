@@ -777,7 +777,7 @@
                                     </td>
                                     <td>
                                         <div class="action-group">
-                                            <a href="{{ route('admin.bookings.show', $booking->id) }}" class="action-btn view" title="View Details">
+                                            <a href="{{ route('bookings.show', $booking->id) }}" class="action-btn view" title="View Details">
                                                 <i class="bi bi-eye"></i>
                                             </a>
 
