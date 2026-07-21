@@ -64,12 +64,6 @@ RUN printf '<Directory /var/www/html/public>\n\
     Require all granted\n\
 </Directory>\n' >> /etc/apache2/apache2.conf
 
-# Create startup entrypoint script and forcibly scrub CRLF Windows line endings
-RUN printf '#!/bin/sh\nset -e\nphp artisan config:clear\nphp artisan migrate --force\nexec "$@"\n' > /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh
-
 EXPOSE 80
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["apache2-foreground"]
+CMD ["/bin/bash", "-c", "php artisan config:clear && php artisan migrate --force && apache2-foreground"]
