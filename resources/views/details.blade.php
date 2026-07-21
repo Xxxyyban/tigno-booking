@@ -49,7 +49,7 @@
             color: white;
             overflow-x: hidden;
             position: relative;
-            padding: 70px 25px;
+            padding: 25px 25px 70px 25px; /* Reduced top padding to accommodate fixed navbar nicely */
         }
 
         body::before {
@@ -78,6 +78,18 @@
             0% { transform: scale(1) rotate(0deg); }
             50% { transform: scale(1.2) rotate(8deg); }
             100% { transform: scale(1.1) rotate(-6deg); }
+        }
+
+        /* FIXED GLASS NAVBAR STYLING */
+        .custom-navbar {
+            background: rgba(7, 11, 22, 0.75) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 30px;
+            margin: -25px -25px 35px -25px; /* Breaks out of body padding to stretch fully across */
         }
 
         .blob {
@@ -264,7 +276,7 @@
         .fc-daygrid-day:hover { background: rgba(255,255,255,0.05); cursor: pointer; }
         .fc-highlight { background: rgba(59, 130, 246, 0.3)!important; }
 
-        /* FullCalendar Event Event Pill Custom Styling */
+        /* FullCalendar Event Pill Custom Styling */
         .fc-event {
             background: linear-gradient(135deg, #ff385c, #e11d48) !important;
             border: none !important;
@@ -292,7 +304,8 @@
         .premium-toast.show { transform: translateX(-50%) translateY(0); }
 
         @media(max-width: 1000px) {
-            body { padding: 35px 15px; }
+            body { padding: 15px 15px 35px 15px; }
+            .custom-navbar { margin: -15px -15px 25px -15px; padding: 12px 20px; }
             .booking-container { grid-template-columns: 1fr; gap: 25px; }
             .title { font-size: 35px; }
             .panel { padding: 25px!important; border-radius: 22px; }
@@ -300,20 +313,38 @@
     </style>
 </head>
 <body>
-     <!-- NAVIGATION BAR -->
+    <!-- FIXED NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg custom-navbar">
-        <div class="container-fluid p-0">
+        <div class="container-fluid">
             <!-- Brand Logo -->
             <a class="navbar-brand text-white text-decoration-none fw-bold fs-4" href="{{ route('welcome') }}">
-                <i class="bi bi-layers-half me-1"></i> Tigno
+                <i class="bi bi-layers-half me-1 text-primary"></i> Tigno
             </a>
             
-            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-list"></i>
+            <button class="navbar-toggler text-white border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-2"></i>
             </button>
 
             <div class="collapse navbar-collapse" id="tignoNavbar">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="{{ route('dashboard') }}">
+                            <i class="bi bi-speedometer2 me-1 text-primary"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="{{ route('booking.start') }}">
+                            <i class="bi bi-calendar-plus me-1 text-primary"></i> New Booking
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3 py-2 fw-semibold">
+                                <i class="bi bi-box-arrow-right me-1"></i> Logout
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
