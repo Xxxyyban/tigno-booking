@@ -264,6 +264,24 @@
         .fc-daygrid-day:hover { background: rgba(255,255,255,0.05); cursor: pointer; }
         .fc-highlight { background: rgba(59, 130, 246, 0.3)!important; }
 
+        /* FullCalendar Event Event Pill Custom Styling */
+        .fc-event {
+            background: linear-gradient(135deg, #ff385c, #e11d48) !important;
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 2px 6px !important;
+            cursor: pointer !important;
+            transition: transform 0.2s ease;
+        }
+        .fc-event:hover {
+            transform: scale(1.03);
+        }
+        .fc-event-title {
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            font-size: 0.75rem !important;
+        }
+
         .premium-toast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
             background: rgba(20, 20, 30, .85); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, .2);
@@ -355,11 +373,9 @@
                 </div>
             </div>
 
-            <!-- FIX: Points directly to the named route group endpoint -->
             <form action="{{ route('booking.details.store') }}" method="POST" class="mt-4" onsubmit="return validateFormBeforeSubmit()">
                 @csrf
 
-                <!-- FIX: Catch and explicitly print out Laravel validation drop exceptions -->
                 @if ($errors->any())
                     <div class="alert alert-danger" style="background: rgba(255, 56, 92, 0.2); border: 1px solid var(--primary); color: white; border-radius: 15px; padding: 15px; margin-bottom: 20px;">
                         <h6 class="fw-bold mb-2"><i class="bi bi-exclamation-triangle-fill me-2"></i> Form Validation Failed:</h6>
@@ -371,7 +387,6 @@
                     </div>
                 @endif
 
-                <!-- Automated Dynamic Target Transmissions -->
                 <input type="hidden" name="booking_datetime" id="booking_datetime" value="{{ old('booking_datetime') }}">
                 <input type="hidden" name="end_datetime" id="end_datetime" value="{{ old('end_datetime') }}">
 
@@ -420,7 +435,6 @@
                     <textarea name="notes" class="form-control" rows="4" placeholder="Mention structural requirements, adjustments...">{{ old('notes') }}</textarea>
                 </div>
 
-                <!-- FIX: Set explicit type="submit" configuration -->
                 <button type="submit" class="premium-btn primary">
                     <i class="bi bi-arrow-right-circle"></i> Proceed to Checkout
                 </button>
@@ -436,6 +450,18 @@
             let today = new Date();
             today.setHours(0,0,0,0);
 
+            // Populate events dynamically from database query ($events variable)
+            let formattedEvents = [
+                @foreach($events as $event)
+                {
+                    id: "{{ $event->id }}",
+                    title: "{{ addslashes($event->name) }}",
+                    start: "{{ \Carbon\Carbon::parse($event->start_date)->toIso8601String() }}",
+                    end: "{{ \Carbon\Carbon::parse($event->end_date)->toIso8601String() }}",
+                },
+                @endforeach
+            ];
+
             let calendarEl = document.getElementById('calendar');
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -443,6 +469,19 @@
                 selectable: true,
                 unselectAuto: false,
                 headerToolbar: { left: 'prev,next', center: 'title', right: 'today' },
+                
+                // Pass formatted events into FullCalendar
+                events: formattedEvents,
+
+                // Sync clicked event directly into the form select input
+                eventClick: function(info) {
+                    let selectElement = document.querySelector('select[name="event_id"]');
+                    if (selectElement) {
+                        selectElement.value = info.event.id;
+                        showToast("Linked Event Selected: " + info.event.title);
+                    }
+                },
+
                 dateClick: function(info) {
                     let clickedDate = new Date(info.dateStr + "T00:00:00");
                     
@@ -475,7 +514,6 @@
             calendar.render();
         });
 
-        // FIX: Sanitizes submission format cleanly for Carbon operations
         function applySchedule() {
             let startTime = document.getElementById('start_time').value;
             let endTime = document.getElementById('end_time').value;
