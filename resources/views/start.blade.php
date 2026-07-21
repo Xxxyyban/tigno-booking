@@ -403,12 +403,6 @@
 
             <div class="collapse navbar-collapse" id="tignoNavbar">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item ms-lg-2">
-                        <a href="{{ route('login.user') }}" class="nav-link px-2">Sign In</a>
-                    </li>
-                    <li class="nav-item ms-lg-2">
-                        <a href="{{ route('customer.register') }}" class="nav-btn d-inline-block">Get Started</a>
-                    </li>
                 </ul>
             </div>
         </div>
