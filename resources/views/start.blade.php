@@ -40,9 +40,10 @@
             color: white;
             overflow-x: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
+            justify-content: flex-start;
+            padding: 20px 20px 40px 20px;
             position: relative;
         }
 
@@ -65,6 +66,71 @@
             100% { transform: scale(1) translate(0px, 0px); }
         }
 
+        /* NAVIGATION BAR STYLES */
+        .custom-navbar {
+            width: 1320px;
+            max-width: 100%;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            backdrop-filter: blur(25px);
+            padding: 12px 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .custom-navbar .navbar-brand {
+            font-size: 16px;
+            letter-spacing: 3px;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .custom-navbar .nav-link {
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 14px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link.active {
+            color: #ffffff;
+        }
+
+        .custom-navbar .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-navbar .nav-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+            font-size: 24px;
+            padding: 0;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* MAIN CONTAINER */
         .main-container {
             width: 1320px;
             max-width: 100%;
@@ -97,7 +163,6 @@
             overflow: hidden;
         }
 
-        /* Auto-cycling background slideshow layer */
         .showcase-slider {
             position: absolute;
             inset: 0;
@@ -115,7 +180,7 @@
         }
 
         .slide-item.active {
-            opacity: 0.35; /* Keeps content strictly readable while showcasing the space */
+            opacity: 0.35;
             transform: scale(1);
         }
 
@@ -324,13 +389,50 @@
 </head>
 <body>
 
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid p-0">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-layers-half me-1"></i> Tigno
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#tignoNavbar" aria-controls="tignoNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="tignoNavbar">
+                <ul class="navbar-menu navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Spaces</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Support</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="{{ route('login.user') }}" class="nav-link px-2">Sign In</a>
+                    <a href="{{ route('customer.register') }}" class="nav-btn">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
     <div class="main-container">
 
         <!-- LEFT COLUMN: CAPTIVATING IMAGE SLIDESHOW & BRAND CORE -->
         <div class="theater-side">
             <!-- Dynamic Background Slide Frame Layer -->
             <div class="showcase-slider">
-                <!-- Using beautiful architectural & lifestyle environments to frame user imagination -->
                 <div class="slide-item active" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=1200');"></div>
                 <div class="slide-item" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80&w=1200');"></div>
                 <div class="slide-item" style="background-image: url('https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=1200');"></div>
@@ -414,6 +516,9 @@
 
     </div>
 
+    <!-- Bootstrap JS Bundle (Required for Navbar Toggle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Background Slider Initialization Routine Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -424,7 +529,7 @@
                 slides[activeIndex].classList.remove('active');
                 activeIndex = (activeIndex + 1) % slides.length;
                 slides[activeIndex].classList.add('active');
-            }, 5000); // Cycles premium locations fluidly every 5 seconds
+            }, 5000);
         });
     </script>
 </body>
