@@ -356,81 +356,97 @@ body {
 }
 
 /* =========================
-   SECTIONS & PANELS
+   SECTIONS & PANELS (REFINED)
 ========================= */
 .section {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 25px;
+    align-items: start;
 }
 
 .panel {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 28px;
     border-radius: 20px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s ease;
+}
+
+.panel:hover {
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
 .panel h4 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    letter-spacing: 0.3px;
 }
 
 /* =========================
-   TABLE STYLING
+   TABLE STYLING (REFINED)
 ========================= */
 .table-responsive {
     width: 100%;
+    overflow-x: auto;
 }
 
-table {
+.custom-table {
     width: 100%;
-    color: white;
+    color: #f8fafc;
     border-collapse: separate;
-    border-spacing: 0 8px;
+    border-spacing: 0 10px;
 }
 
-th, td {
-    padding: 14px 16px;
-    font-size: 0.88rem;
+.custom-table th, 
+.custom-table td {
+    padding: 14px 18px;
+    font-size: 0.87rem;
     text-align: left;
+    white-space: nowrap;
 }
 
-th {
-    color: rgba(255, 255, 255, 0.5);
+.custom-table th {
+    color: rgba(255, 255, 255, 0.45);
     font-weight: 500;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     background: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 0;
 }
 
-tr {
+.custom-table tbody tr {
     background: rgba(255, 255, 255, 0.02);
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-tr td:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+.custom-table tbody tr td:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    font-weight: 600;
+    color: #ff859b;
 }
 
-tr td:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+.custom-table tbody tr td:last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
-tr:hover {
-    background: rgba(255, 255, 255, 0.06);
-    transform: scale(1.002);
+.custom-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* =========================
@@ -439,15 +455,17 @@ tr:hover {
 .btn-modern {
     background: linear-gradient(135deg, #ff385c, #e11d48);
     border: none;
-    padding: 12px 18px;
+    padding: 13px 18px;
     border-radius: 12px;
     color: white;
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.9rem;
-    display: inline-block;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.35);
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -455,7 +473,7 @@ tr:hover {
     background: linear-gradient(135deg, #e11d48, #be123c);
     color: white;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 56, 92, 0.5);
+    box-shadow: 0 6px 20px rgba(255, 56, 92, 0.45);
 }
 
 .logout {
@@ -648,7 +666,7 @@ tr:hover {
 </div>
 
 <!-- =========================
-     MAIN SECTIONS
+     MAIN SECTIONS (FIXED & POLISHED)
 ========================= -->
 <div class="section">
 
@@ -656,11 +674,11 @@ tr:hover {
 <div class="panel">
 <h4>
 <span>Recent Bookings</span>
-<a href="{{ route('admin.bookings.index') }}" class="text-decoration-none" style="font-size: 0.8rem; color: #ff385c;">View All</a>
+<a href="{{ route('admin.bookings.index') }}" class="text-decoration-none" style="font-size: 0.8rem; color: #ff385c; font-weight: 600;">View All</a>
 </h4>
 
 <div class="table-responsive">
-<table>
+<table class="custom-table">
 <thead>
 <tr>
 <th>ID</th>
@@ -688,17 +706,17 @@ tr:hover {
 <div class="panel">
 <h4>Quick Actions</h4>
 
-<div class="d-flex flex-column gap-2 mt-3">
+<div class="d-flex flex-column gap-3 mt-3">
 <a href="{{ route('admin.bookings.index') }}" class="btn-modern">
-<i class="bi bi-calendar-check me-2"></i> Manage Bookings
+<i class="bi bi-calendar-check me-2 fs-5"></i> Manage Bookings
 </a>
 
 <a href="{{ route('admin.calendar') }}" class="btn-modern">
-<i class="bi bi-calendar3 me-2"></i> View Calendar
+<i class="bi bi-calendar3 me-2 fs-5"></i> View Calendar
 </a>
 
 <a href="#" class="btn-modern">
-<i class="bi bi-plus-circle me-2"></i> Add Room
+<i class="bi bi-plus-circle me-2 fs-5"></i> Add Room
 </a>
 </div>
 
