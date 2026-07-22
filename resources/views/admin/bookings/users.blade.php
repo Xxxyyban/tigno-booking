@@ -87,7 +87,7 @@ body {
 }
 
 .sidebar-brand i {
-    color: #ff385c;
+    color: #f0dce0;
     font-size: 1.4rem;
 }
 
