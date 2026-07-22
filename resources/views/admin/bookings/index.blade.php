@@ -223,6 +223,7 @@
             font-size: 0.9rem;
             box-shadow: 0 6px 20px rgba(147, 51, 234, 0.3);
             letter-spacing: 0.5px;
+            color: #fff;
         }
 
         .admin-info .name {
@@ -270,6 +271,7 @@
             align-items: center;
             gap: 12px;
             letter-spacing: -0.5px;
+            color: #fff;
         }
 
         .page-title i {
@@ -572,7 +574,7 @@
                 <span>Calendar Matrix</span>
             </a>
 
-            <a href="{{ route('admin.dashboard') }}" class="nav-item">
+            <a href="{{ route('admin.users') }}" class="nav-item">
                 <i class="bi bi-people"></i>
                 <span>Client Users</span>
             </a>
@@ -599,9 +601,8 @@
     ========================= -->
     <header class="admin-navbar">
         <div class="admin-nav-actions">
-            <a href="#" class="icon-btn" title="System Notifications">
-                <i class="bi bi-bell"></i>
-                <span class="badge-dot"></span>
+            <a href="#" class="icon-btn text-light text-decoration-none position-relative me-3" title="System Notifications">
+                <i class="bi bi-bell fs-5"></i>
             </a>
 
             <div class="admin-profile">
@@ -669,26 +670,26 @@
                             @forelse($bookings as $booking)
                                 <tr>
                                     <td class="text-muted">#{{ $booking->id }}</td>
-                                    <td><span class="font-monospace fw-bold text-danger">#{{ $booking->booking_id }}</span></td>
-                                    <td class="fw-semibold">{{ $booking->first_name }} {{ $booking->last_name }}</td>
-                                    <td class="text-muted">{{ $booking->email }}</td>
-                                    <td>{{ $booking->contact }}</td>
+                                    <td><span class="font-monospace fw-bold text-danger">#{{ $booking->booking_id ?? $booking->id }}</span></td>
+                                    <td class="fw-semibold">{{ $booking->first_name ?? $booking->name ?? 'N/A' }} {{ $booking->last_name ?? '' }}</td>
+                                    <td class="text-muted">{{ $booking->email ?? 'N/A' }}</td>
+                                    <td>{{ $booking->contact ?? 'N/A' }}</td>
                                     <td>
                                         <span class="badge-room">
                                             {{ $booking->room_type }}
                                         </span>
                                     </td>
-                                    <td class="text-center">{{ $booking->guests }}</td>
+                                    <td class="text-center">{{ $booking->guests ?? 1 }}</td>
                                     <td>{{ $booking->event?->name ?? 'N/A' }}</td>
                                     <td>
                                         <div class="fw-medium">{{ \Carbon\Carbon::parse($booking->booking_datetime)->format('M d, Y h:i A') }}</div>
                                         <small class="text-muted">
-                                            → {{ \Carbon\Carbon::parse($booking->end_datetime)->format('M d, Y h:i A') }}
+                                            → {{ $booking->end_datetime ? \Carbon\Carbon::parse($booking->end_datetime)->format('M d, Y h:i A') : 'N/A' }}
                                         </small>
                                     </td>
                                     <td>
-                                        @if($booking->receipt)
-                                            <a href="{{ route('admin.bookings.receipt', $booking) }}" target="_blank" class="file-link">
+                                        @if($booking->receipt_path || $booking->receipt)
+                                            <a href="{{ route('admin.bookings.receipt', $booking->id) }}" target="_blank" class="file-link">
                                                 <i class="bi bi-file-earmark-text-fill"></i> View Document
                                             </a>
                                         @else
@@ -747,7 +748,7 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: '/admin/bookings/events',
+                events: '{{ route("admin.events") }}',
                 editable: false,
                 selectable: false,
                 eventClick: function(info) {

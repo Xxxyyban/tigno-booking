@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Admin Dashboard</title>
+<title>Client Users — Admin Dashboard</title>
 
 <!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -279,92 +279,8 @@ body {
 }
 
 /* =========================
-   CARDS GRID
+   PANELS
 ========================= */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 35px;
-}
-
-.card-box {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 24px;
-    border-radius: 20px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.card-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.card-box:hover {
-    transform: translateY(-6px);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
-}
-
-.card-box:hover::before {
-    opacity: 1;
-}
-
-.card-header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
-}
-
-.card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: #ff385c;
-}
-
-.card-title {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 500;
-}
-
-.card-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-}
-
-/* =========================
-   SECTIONS & PANELS
-========================= */
-.section {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 25px;
-    align-items: start;
-}
-
 .panel {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(25px);
@@ -446,29 +362,6 @@ body {
 /* =========================
    BUTTONS
 ========================= */
-.btn-modern {
-    background: linear-gradient(135deg, #ff385c, #e11d48);
-    border: none;
-    padding: 13px 18px;
-    border-radius: 12px;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.88rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-modern:hover {
-    background: linear-gradient(135deg, #e11d48, #be123c);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 56, 92, 0.45);
-}
-
 .logout {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -492,15 +385,6 @@ body {
 }
 
 /* Responsive tweaks */
-@media(max-width: 1200px) {
-    .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .section {
-        grid-template-columns: 1fr;
-    }
-}
-
 @media(max-width: 768px) {
     .sidebar {
         width: 70px;
@@ -517,9 +401,6 @@ body {
     }
     .admin-navbar-search {
         display: none;
-    }
-    .card-grid {
-        grid-template-columns: 1fr;
     }
 }
 
@@ -540,7 +421,7 @@ body {
 </div>
 
 <div class="nav-menu">
-<a href="{{ route('admin.home') }}" class="nav-item active">
+<a href="{{ route('admin.home') }}" class="nav-item">
 <i class="bi bi-speedometer2"></i>
 <span>Dashboard</span>
 </a>
@@ -555,7 +436,7 @@ body {
 <span>Calendar</span>
 </a>
 
-<a href="{{ route('admin.users') }}" class="nav-item">
+<a href="{{ route('admin.users') }}" class="nav-item active">
 <i class="bi bi-people"></i>
 <span>Users</span>
 </a>
@@ -615,59 +496,19 @@ body {
 <div class="main">
 
 <div class="welcome-banner">
-<h1>Welcome Back, Admin 👋</h1>
-<p>Here is what's happening with your property bookings today.</p>
+<h1>Client Users Management 👥</h1>
+<p>View and manage all registered client profiles within the system.</p>
 </div>
 
 <!-- =========================
-     STATS CARDS
+     USERS TABLE PANEL
 ========================= -->
-<div class="card-grid">
-
-<div class="card-box">
-<div class="card-header-flex">
-<div class="card-title">Total Bookings</div>
-<div class="card-icon"><i class="bi bi-journal-bookmark"></i></div>
-</div>
-<div class="card-value">{{ \App\Models\Booking::count() }}</div>
-</div>
-
-<div class="card-box">
-<div class="card-header-flex">
-<div class="card-title">Active Rooms</div>
-<div class="card-icon"><i class="bi bi-door-open"></i></div>
-</div>
-<div class="card-value">12</div>
-</div>
-
-<div class="card-box">
-<div class="card-header-flex">
-<div class="card-title">Today Bookings</div>
-<div class="card-icon"><i class="bi bi-calendar-day"></i></div>
-</div>
-<div class="card-value">5</div>
-</div>
-
-<div class="card-box">
-<div class="card-header-flex">
-<div class="card-title">Revenue</div>
-<div class="card-icon"><i class="bi bi-wallet2"></i></div>
-</div>
-<div class="card-value">₱25,000</div>
-</div>
-
-</div>
-
-<!-- =========================
-     MAIN SECTIONS
-========================= -->
-<div class="section">
-
-<!-- RECENT BOOKINGS -->
 <div class="panel">
 <h4>
-<span>Recent Bookings</span>
-<a href="{{ route('admin.bookings.index') }}" class="text-decoration-none" style="font-size: 0.8rem; color: #ff385c; font-weight: 600;">View All</a>
+<span>Registered Users</span>
+<span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-25" style="font-size: 0.75rem; padding: 6px 12px; border-radius: 20px;">
+{{ \App\Models\User::count() }} Total
+</span>
 </h4>
 
 <div class="table-responsive">
@@ -675,44 +516,22 @@ body {
 <thead>
 <tr>
 <th>ID</th>
-<th>Customer</th>
-<th>Room</th>
-<th>Date</th>
+<th>Name</th>
+<th>Email Address</th>
+<th>Registered Date</th>
 </tr>
 </thead>
 <tbody>
-@foreach(\App\Models\Booking::latest()->take(5)->get() as $b)
+@foreach(\App\Models\User::latest()->get() as $user)
 <tr>
-<td>#{{ $b->booking_id }}</td>
-<td>{{ $b->first_name }}</td>
-<td>{{ $b->room_type }}</td>
-<td>{{ $b->booking_datetime }}</td>
+<td>#{{ $user->id }}</td>
+<td>{{ $user->name }}</td>
+<td>{{ $user->email }}</td>
+<td>{{ $user->created_at ? $user->created_at->format('M d, Y h:i A') : 'N/A' }}</td>
 </tr>
 @endforeach
 </tbody>
 </table>
-</div>
-
-</div>
-
-<!-- QUICK ACTIONS -->
-<div class="panel">
-<h4>Quick Actions</h4>
-
-<div class="d-flex flex-column gap-3 mt-3">
-<a href="{{ route('admin.bookings.index') }}" class="btn-modern">
-<i class="bi bi-calendar-check me-2 fs-5"></i> Manage Bookings
-</a>
-
-<a href="{{ route('admin.calendar') }}" class="btn-modern">
-<i class="bi bi-calendar3 me-2 fs-5"></i> View Calendar
-</a>
-
-<a href="#" class="btn-modern">
-<i class="bi bi-plus-circle me-2 fs-5"></i> Add Room
-</a>
-</div>
-
 </div>
 
 </div>
