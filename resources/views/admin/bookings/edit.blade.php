@@ -554,11 +554,6 @@
                 <span>Client Users</span>
             </a>
 
-            <a href="#" class="nav-item">
-                <i class="bi bi-gear"></i>
-                <span>System Config</span>
-            </a>
-        </nav>
 
         <div class="sidebar-footer">
             <form method="POST" action="{{ route('logout') }}">

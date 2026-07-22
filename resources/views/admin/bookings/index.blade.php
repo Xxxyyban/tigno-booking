@@ -66,7 +66,7 @@
         }
 
         /* =========================
-           SIDEBAR STYLING
+            SIDEBAR STYLING
         ========================= */
         .sidebar {
             width: var(--sidebar-width);
@@ -152,6 +152,7 @@
         .sidebar-footer {
             padding-top: 20px;
             border-top: 1px solid var(--border-glass);
+            margin-top: auto; /* Ensures it cleanly hugs the bottom */
         }
 
         .logout-btn {
@@ -179,7 +180,7 @@
         }
 
         /* =========================
-           TOP NAVBAR STYLING
+            TOP NAVBAR STYLING
         ========================= */
         .admin-navbar {
             margin-left: var(--sidebar-width);
@@ -308,7 +309,7 @@
         }
 
         /* =========================
-           MAIN CONTENT AREA
+            MAIN CONTENT AREA
         ========================= */
         .main-content {
             margin-left: var(--sidebar-width);
@@ -374,7 +375,7 @@
         }
 
         /* =========================
-           CALENDAR PANEL (EXPANDED)
+            CALENDAR PANEL (EXPANDED)
         ========================= */
         .calendar-wrapper {
             background: var(--bg-surface);
@@ -466,7 +467,7 @@
         }
 
         /* =========================
-           DATA TABLE MATRIX
+            DATA TABLE MATRIX
         ========================= */
         .table-container {
             background: var(--bg-surface);
@@ -674,14 +675,14 @@
 <body>
 
     <!-- =========================
-       SIDEBAR NAVIGATION MATRIX
+        SIDEBAR NAVIGATION MATRIX
     ========================= -->
     <aside class="sidebar">
         <div class="sidebar-brand">
             <div class="sidebar-brand-icon">
-                <i class="bi bi-lightning-charge-fill"></i>
+                <i class="bi bi-shield-lock-fill"></i>
             </div>
-            <span>Tigno Core</span>
+            <span>Admin Panel</span>
         </div>
 
         <nav class="nav-menu">
@@ -704,20 +705,21 @@
                 <i class="bi bi-people"></i>
                 <span>Client Users</span>
             </a>
+        </nav>
 
         <div class="sidebar-footer">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="logout-btn">
+                <button type="submit" class="logout-btn" title="Sign Out">
                     <i class="bi bi-box-arrow-right"></i>
-                    <span>Logout</span>
+                    <span>Sign Out</span>
                 </button>
             </form>
         </div>
     </aside>
 
     <!-- =========================
-       ADMIN TOP NAVIGATION BAR
+        ADMIN TOP NAVIGATION BAR
     ========================= -->
     <header class="admin-navbar">
         <div class="admin-navbar-search">
@@ -742,7 +744,7 @@
     </header>
 
     <!-- =========================
-       MAIN BODY WORKSPACE
+        MAIN BODY WORKSPACE
     ========================= -->
     <main class="main-content">
         <div class="container-box">
@@ -872,7 +874,7 @@
     </main>
 
     <!-- =========================
-       SCRIPTS & INITIALIZATIONS
+        SCRIPTS & INITIALIZATIONS
     ========================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
