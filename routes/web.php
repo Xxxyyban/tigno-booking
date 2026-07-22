@@ -120,9 +120,11 @@ Route::middleware('auth')
             return view('admin.calendar');
         })->name('calendar');
 
-        Route::get('/admin/users', function () {
+        Route::get('/users', function () {
+            abort_unless(auth()->user()->isAdmin(), 403);
+
             return view('admin.bookings.users');
-        })->name('admin.users');
+        })->name('users');
 
         Route::get('/bookings/events', function () {
             abort_unless(auth()->user()->isAdmin(), 403);
