@@ -421,7 +421,7 @@ body {
 </div>
 
 <div class="nav-menu">
-<a href="{{ route('admin.home') }}" class="nav-item">
+<a href="{{ route('admin.dashboard') }}" class="nav-item">
 <i class="bi bi-speedometer2"></i>
 <span>Dashboard</span>
 </a>
