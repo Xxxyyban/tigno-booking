@@ -705,18 +705,12 @@
                 <span>Client Users</span>
             </a>
 
-            <a href="{{ route('admin.dashboard') }}" class="nav-item">
-                <i class="bi bi-gear"></i>
-                <span>System Config</span>
-            </a>
-        </nav>
-
         <div class="sidebar-footer">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="logout-btn">
                     <i class="bi bi-box-arrow-right"></i>
-                    <span>Terminate Session</span>
+                    <span>Logout</span>
                 </button>
             </form>
         </div>

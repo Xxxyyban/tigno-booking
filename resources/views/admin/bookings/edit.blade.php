@@ -565,7 +565,7 @@
                 @csrf
                 <button type="submit" class="logout-btn">
                     <i class="bi bi-box-arrow-right"></i>
-                    <span>Terminate Session</span>
+                    <span>Logout</span>
                 </button>
             </form>
         </div>
