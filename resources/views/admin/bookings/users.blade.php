@@ -291,13 +291,39 @@ body {
     box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
 }
 
-.panel h4 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 22px;
+.panel-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.panel h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-search-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 14px;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.85rem;
+    width: 240px;
+    transition: all 0.3s ease;
+}
+
+.table-search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 56, 92, 0.5);
 }
 
 /* =========================
@@ -321,6 +347,7 @@ body {
     font-size: 0.87rem;
     text-align: left;
     white-space: nowrap;
+    vertical-align: middle;
 }
 
 .custom-table th {
@@ -357,6 +384,25 @@ body {
     transform: translateY(-1px);
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.user-cell-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-mini-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 56, 92, 0.15);
+    color: #ff859b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.8rem;
 }
 
 /* =========================
@@ -415,47 +461,42 @@ body {
 ========================= -->
 <div class="sidebar">
 
-<div class="sidebar-brand">
-<i class="bi bi-lightning-charge-fill"></i>
-<span>Admin Panel</span>
-</div>
+    <div class="sidebar-brand">
+        <i class="bi bi-lightning-charge-fill"></i>
+        <span>Admin Panel</span>
+    </div>
 
-<div class="nav-menu">
-<a href="{{ route('admin.dashboard') }}" class="nav-item">
-<i class="bi bi-speedometer2"></i>
-<span>Dashboard</span>
-</a>
+    <div class="nav-menu">
+        <a href="{{ route('admin.dashboard') }}" class="nav-item">
+            <i class="bi bi-speedometer2"></i>
+            <span>Dashboard</span>
+        </a>
 
-<a href="{{ route('admin.bookings.index') }}" class="nav-item">
-<i class="bi bi-calendar-check"></i>
-<span>Bookings</span>
-</a>
+        <a href="{{ route('admin.bookings.index') }}" class="nav-item">
+            <i class="bi bi-calendar-check"></i>
+            <span>Bookings</span>
+        </a>
 
-<a href="{{ route('admin.calendar') }}" class="nav-item">
-<i class="bi bi-calendar3"></i>
-<span>Calendar</span>
-</a>
+        <a href="{{ route('admin.calendar') }}" class="nav-item">
+            <i class="bi bi-calendar3"></i>
+            <span>Calendar</span>
+        </a>
 
-<a href="{{ route('admin.users') }}" class="nav-item active">
-<i class="bi bi-people"></i>
-<span>Users</span>
-</a>
+        <a href="{{ route('admin.users') }}" class="nav-item active">
+            <i class="bi bi-people"></i>
+            <span>Users</span>
+        </a>
+    </div>
 
-<a href="#" class="nav-item">
-<i class="bi bi-gear"></i>
-<span>Settings</span>
-</a>
-</div>
-
-<div class="sidebar-footer">
-<form method="POST" action="{{ route('logout') }}">
-@csrf
-<button class="logout">
-<i class="bi bi-box-arrow-right"></i>
-<span>Logout</span>
-</button>
-</form>
-</div>
+    <div class="sidebar-footer">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button class="logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </button>
+        </form>
+    </div>
 
 </div>
 
@@ -464,29 +505,25 @@ body {
 ========================= -->
 <div class="admin-navbar">
 
-<div class="admin-navbar-search">
-<i class="bi bi-search"></i>
-<input type="text" placeholder="Search bookings, users, rooms...">
-</div>
+    <div class="admin-navbar-search">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Search bookings, users, rooms...">
+    </div>
 
-<div class="admin-nav-actions">
-<a href="#" class="icon-btn" title="Notifications">
-<i class="bi bi-bell"></i>
-<span class="badge-dot"></span>
-</a>
+    <div class="admin-nav-actions">
+        <a href="#" class="icon-btn" title="Notifications">
+            <i class="bi bi-bell"></i>
+            <span class="badge-dot"></span>
+        </a>
 
-<a href="#" class="icon-btn" title="Settings">
-<i class="bi bi-gear"></i>
-</a>
-
-<div class="admin-profile">
-<div class="admin-avatar">AD</div>
-<div class="admin-info d-none d-md-block">
-<div class="name">Administrator</div>
-<div class="role">System Manager</div>
-</div>
-</div>
-</div>
+        <div class="admin-profile">
+            <div class="admin-avatar">AD</div>
+            <div class="admin-info d-none d-md-block">
+                <div class="name">Administrator</div>
+                <div class="role">System Manager</div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -495,48 +532,75 @@ body {
 ========================= -->
 <div class="main">
 
-<div class="welcome-banner">
-<h1>Client Users Management 👥</h1>
-<p>View and manage all registered client profiles within the system.</p>
+    <div class="welcome-banner">
+        <h1>Client Users Management 👥</h1>
+        <p>View and manage all registered client profiles within the system.</p>
+    </div>
+
+    <!-- =========================
+         USERS TABLE PANEL
+    ========================= -->
+    <div class="panel">
+        <div class="panel-header">
+            <h4>
+                <span>Registered Users</span>
+                <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-25" style="font-size: 0.75rem; padding: 6px 12px; border-radius: 20px;">
+                    {{ \App\Models\User::count() }} Total
+                </span>
+            </h4>
+            <input type="text" id="userTableSearch" class="table-search-input" placeholder="Filter users...">
+        </div>
+
+        <div class="table-responsive">
+            <table class="custom-table" id="usersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User Name</th>
+                        <th>Email Address</th>
+                        <th>Registered Date</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(\App\Models\User::latest()->get() as $user)
+                    <tr>
+                        <td>#{{ $user->id }}</td>
+                        <td>
+                            <div class="user-cell-profile">
+                                <div class="user-mini-avatar">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
+                                <span style="font-weight: 500; color: #fff;">{{ $user->name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->created_at ? $user->created_at->format('M d, Y h:i A') : 'N/A' }}</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-light border-0" style="background: rgba(255,255,255,0.05);" title="View Details">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 </div>
 
-<!-- =========================
-     USERS TABLE PANEL
-========================= -->
-<div class="panel">
-<h4>
-<span>Registered Users</span>
-<span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-25" style="font-size: 0.75rem; padding: 6px 12px; border-radius: 20px;">
-{{ \App\Models\User::count() }} Total
-</span>
-</h4>
-
-<div class="table-responsive">
-<table class="custom-table">
-<thead>
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Email Address</th>
-<th>Registered Date</th>
-</tr>
-</thead>
-<tbody>
-@foreach(\App\Models\User::latest()->get() as $user)
-<tr>
-<td>#{{ $user->id }}</td>
-<td>{{ $user->name }}</td>
-<td>{{ $user->email }}</td>
-<td>{{ $user->created_at ? $user->created_at->format('M d, Y h:i A') : 'N/A' }}</td>
-</tr>
-@endforeach
-</tbody>
-</table>
-</div>
-
-</div>
-
-</div>
+<!-- Simple Live Filter Script -->
+<script>
+    document.getElementById('userTableSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll('#usersTable tbody tr');
+        
+        rows.forEach(row => {
+            let text = row.textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? '' : 'none';
+        });
+    });
+</script>
 
 </body>
 </html>

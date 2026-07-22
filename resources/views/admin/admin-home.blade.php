@@ -567,12 +567,6 @@ body {
 <span>Users</span>
 </a>
 
-<a href="#" class="nav-item">
-<i class="bi bi-gear"></i>
-<span>Settings</span>
-</a>
-</div>
-
 <div class="sidebar-footer">
 <form method="POST" action="{{ route('logout') }}">
 @csrf

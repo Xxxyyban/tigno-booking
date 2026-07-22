@@ -318,7 +318,7 @@
         }
 
         .details-container {
-            max-width: 900px;
+            max-width: 950px;
             margin: auto;
         }
 
@@ -337,7 +337,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .card-title {
@@ -353,6 +354,12 @@
         .card-title i {
             color: var(--primary);
             filter: drop-shadow(0 4px 12px var(--primary-glow));
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
         .enterprise-divider {
@@ -391,27 +398,43 @@
         }
 
         /* Action Buttons */
-        .btn-back {
+        .btn-custom {
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary-custom {
             background: linear-gradient(135deg, #ff385c, #e11d48);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            box-shadow: 0 8px 25px var(--primary-glow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            box-shadow: 0 6px 20px var(--primary-glow);
         }
 
-        .btn-back:hover {
+        .btn-primary-custom:hover {
             background: linear-gradient(135deg, #e11d48, #be123c);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(255, 56, 92, 0.4);
+            box-shadow: 0 10px 25px rgba(255, 56, 92, 0.4);
+        }
+
+        .btn-secondary-custom {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+        }
+
+        .btn-secondary-custom:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         /* Responsive Breakpoints */
@@ -451,7 +474,7 @@
 <body>
 
     <!-- =========================
-       SIDEBAR NAVIGATION MATRIX
+        SIDEBAR NAVIGATION MATRIX
     ========================= -->
     <aside class="sidebar">
         <div class="sidebar-brand">
@@ -462,7 +485,7 @@
         </div>
 
         <nav class="nav-menu">
-            <a href="/admin/dashboard" class="nav-item">
+            <a href="{{ route('admin.dashboard') }}" class="nav-item">
                 <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
             </a>
@@ -477,14 +500,9 @@
                 <span>Calendar</span>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="{{ route('admin.users') }}" class="nav-item">
                 <i class="bi bi-people"></i>
                 <span>Users</span>
-            </a>
-
-            <a href="#" class="nav-item">
-                <i class="bi bi-gear"></i>
-                <span>Settings</span>
             </a>
         </nav>
 
@@ -500,7 +518,7 @@
     </aside>
 
     <!-- =========================
-       ADMIN TOP NAVIGATION BAR
+        ADMIN TOP NAVIGATION BAR
     ========================= -->
     <header class="admin-navbar">
         <div class="admin-navbar-search">
@@ -514,10 +532,6 @@
                 <span class="badge-dot"></span>
             </a>
 
-            <a href="#" class="icon-btn" title="Settings">
-                <i class="bi bi-gear"></i>
-            </a>
-
             <div class="admin-profile">
                 <div class="admin-avatar">AD</div>
                 <div class="admin-info d-none d-md-block">
@@ -529,7 +543,7 @@
     </header>
 
     <!-- =========================
-       MAIN BODY WORKSPACE
+        MAIN BODY WORKSPACE
     ========================= -->
     <main class="main-content">
         <div class="details-container">
@@ -540,7 +554,17 @@
                         <i class="bi bi-info-circle-fill"></i>
                         Booking Information
                     </h2>
-                    <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-25 px-3 py-2 rounded-pill font-monospace" style="font-size: 0.85rem;">#{{ $booking->booking_id }}</span>
+                    
+                    <div class="header-actions">
+                        <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-25 px-3 py-2 rounded-pill font-monospace" style="font-size: 0.85rem;">
+                            #{{ $booking->booking_id }}
+                        </span>
+                        
+                        <!-- Optional receipt quick download action -->
+                        <a href="{{ route('admin.bookings.receipt', $booking->id) }}" class="btn-custom btn-secondary-custom" title="Download Receipt">
+                            <i class="bi bi-file-earmark-pdf"></i> <span class="d-none d-sm-inline">Receipt</span>
+                        </a>
+                    </div>
                 </div>
 
                 <hr class="enterprise-divider">
@@ -549,7 +573,7 @@
                     <div class="col-md-6">
                         <div class="row-box">
                             <strong>Booking ID</strong>
-                            <div class="value-text">{{ $booking->booking_id }}</div>
+                            <div class="value-text font-monospace">{{ $booking->booking_id }}</div>
                         </div>
                     </div>
 
@@ -614,10 +638,16 @@
                     <div class="value-text">{{ $booking->notes ?: 'No special notes provided.' }}</div>
                 </div>
 
-                <div class="mt-4">
-                    <a href="{{ route('admin.bookings.index') }}" class="btn-back">
+                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <a href="{{ route('admin.bookings.index') }}" class="btn-custom btn-secondary-custom">
                         <i class="bi bi-arrow-left"></i> Back to Bookings
                     </a>
+
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="btn-custom btn-primary-custom">
+                            <i class="bi bi-pencil-square"></i> Edit Booking
+                        </a>
+                    </div>
                 </div>
 
             </div>

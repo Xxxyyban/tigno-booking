@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Booking — Enterprise Admin Dashboard</title>
+    <title>Edit Booking Matrix — Enterprise Admin Dashboard</title>
 
     <!-- Bootstrap 5.3.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -14,13 +14,13 @@
 
     <style>
         :root {
-            --bg-base: #070b16;
-            --bg-surface: rgba(15, 23, 42, 0.7);
-            --bg-surface-hover: rgba(255, 255, 255, 0.06);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-glass-focus: rgba(255, 56, 92, 0.4);
+            --bg-base: #040711;
+            --bg-surface: rgba(13, 20, 36, 0.75);
+            --bg-surface-hover: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.09);
+            --border-glass-focus: rgba(255, 56, 92, 0.5);
             --primary: #ff385c;
-            --primary-glow: rgba(255, 56, 92, 0.25);
+            --primary-glow: rgba(255, 56, 92, 0.3);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --sidebar-width: 270px;
@@ -36,9 +36,9 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-base);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(30, 27, 75, 0.6) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(88, 28, 135, 0.15) 0%, transparent 60%);
+                radial-gradient(circle at 15% 15%, rgba(49, 36, 129, 0.5) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(15, 23, 42, 0.9) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(126, 34, 206, 0.12) 0%, transparent 70%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
@@ -59,7 +59,7 @@
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 56, 92, 0.6);
+            background: rgba(255, 56, 92, 0.7);
         }
 
         /* =========================
@@ -72,8 +72,8 @@
             top: 0;
             left: 0;
             background: var(--bg-surface);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             border-right: 1px solid var(--border-glass);
             padding: 24px 20px;
             z-index: 1040;
@@ -95,23 +95,23 @@
         }
 
         .sidebar-brand-icon {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, #ff385c, #e11d48);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px var(--primary-glow);
+            box-shadow: 0 10px 25px var(--primary-glow);
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .nav-menu {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .nav-item {
@@ -139,11 +139,11 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(255, 56, 92, 0.18), rgba(225, 29, 72, 0.08));
-            border: 1px solid rgba(255, 56, 92, 0.25);
+            background: linear-gradient(135deg, rgba(255, 56, 92, 0.2), rgba(225, 29, 72, 0.08));
+            border: 1px solid rgba(255, 56, 92, 0.3);
             color: #ff859b;
             font-weight: 600;
-            box-shadow: 0 4px 20px rgba(255, 56, 92, 0.1);
+            box-shadow: 0 4px 20px rgba(255, 56, 92, 0.12);
         }
 
         .sidebar-footer {
@@ -170,7 +170,7 @@
 
         .logout-btn:hover {
             background: rgba(239, 68, 68, 0.15);
-            border-color: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.35);
             color: #f87171;
             transform: translateY(-1px);
         }
@@ -182,7 +182,7 @@
             margin-left: var(--sidebar-width);
             height: var(--navbar-height);
             padding: 0 40px;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(13, 20, 36, 0.6);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid var(--border-glass);
@@ -254,7 +254,7 @@
 
         .icon-btn:hover {
             background: var(--bg-surface-hover);
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
             color: white;
             transform: translateY(-2px);
         }
@@ -288,7 +288,7 @@
             justify-content: center;
             font-weight: 700;
             font-size: 0.9rem;
-            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.3);
+            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.35);
             letter-spacing: 0.5px;
         }
 
@@ -309,50 +309,62 @@
         .main-content {
             margin-left: var(--sidebar-width);
             padding: 40px;
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .edit-container {
-            max-width: 960px;
+            max-width: 980px;
             margin: auto;
         }
 
         .enterprise-card {
             background: var(--bg-surface);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--border-glass);
-            border-radius: 24px;
-            padding: 40px;
+            border-radius: 28px;
+            padding: 48px;
             color: white;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enterprise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         .card-header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0;
         }
 
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 800;
             margin: 0;
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .card-title i {
             color: var(--primary);
-            filter: drop-shadow(0 4px 12px var(--primary-glow));
+            font-size: 1.4rem;
+            filter: drop-shadow(0 4px 15px var(--primary-glow));
         }
 
         .back-link {
@@ -363,16 +375,39 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: color 0.2s ease;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            transition: all 0.2s ease;
         }
 
         .back-link:hover {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(-2px);
         }
 
         .enterprise-divider {
             border-color: var(--border-glass);
-            margin: 25px 0 35px 0;
+            margin: 30px 0 40px 0;
+        }
+
+        /* Section Grouping */
+        .form-section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-section-title i {
+            color: var(--primary);
         }
 
         /* Form Controls */
@@ -383,6 +418,9 @@
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .form-control, .form-select {
@@ -390,13 +428,13 @@
             color: white !important;
             border: 1px solid var(--border-glass) !important;
             border-radius: 14px !important;
-            padding: 12px 18px !important;
-            font-size: 0.88rem !important;
+            padding: 13px 18px !important;
+            font-size: 0.9rem !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
 
         .form-control::placeholder {
-            color: rgba(148, 163, 184, 0.5);
+            color: rgba(148, 163, 184, 0.4);
         }
 
         .form-control:focus, .form-select:focus {
@@ -408,6 +446,13 @@
         .form-select option {
             background: #0f172a;
             color: white;
+            padding: 10px;
+        }
+
+        /* Custom invalid states if needed */
+        .form-control.is-invalid, .form-select.is-invalid {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.25) !important;
         }
 
         .btn-update {
@@ -415,17 +460,17 @@
             color: white;
             width: 100%;
             border: none;
-            padding: 15px;
+            padding: 16px;
             border-radius: 14px;
             font-weight: 700;
             font-size: 0.95rem;
-            margin-top: 30px;
-            box-shadow: 0 8px 25px var(--primary-glow);
+            margin-top: 35px;
+            box-shadow: 0 10px 30px var(--primary-glow);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             cursor: pointer;
         }
 
@@ -433,7 +478,7 @@
             background: linear-gradient(135deg, #e11d48, #be123c);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(255, 56, 92, 0.4);
+            box-shadow: 0 15px 35px rgba(255, 56, 92, 0.45);
         }
 
         /* Responsive Breakpoints */
@@ -466,6 +511,11 @@
             }
             .main-content {
                 padding: 20px;
+            }
+            .card-header-flex {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
             }
         }
     </style>
@@ -536,10 +586,6 @@
                 <span class="badge-dot"></span>
             </a>
 
-            <a href="#" class="icon-btn" title="Quick Settings">
-                <i class="bi bi-sliders"></i>
-            </a>
-
             <div class="admin-profile">
                 <div class="admin-avatar">AD</div>
                 <div class="admin-info d-none d-md-block">
@@ -573,7 +619,11 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="row g-4">
+                    <!-- Section: Core Data -->
+                    <div class="form-section-title">
+                        <i class="bi bi-shield-lock-fill"></i> Primary Transaction Identifiers
+                    </div>
+                    <div class="row g-4 mb-4">
                         <div class="col-md-6">
                             <label class="form-label-custom">Booking ID Token</label>
                             <input type="text" name="booking_id" class="form-control" value="{{ old('booking_id', $booking->booking_id) }}" required>
@@ -589,7 +639,13 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
 
+                    <!-- Section: Client Details -->
+                    <div class="form-section-title mt-4">
+                        <i class="bi bi-person-badge-fill"></i> Client Contact Information
+                    </div>
+                    <div class="row g-4 mb-4">
                         <div class="col-md-12">
                             <label class="form-label-custom">Client Full Name</label>
                             <input type="text" name="full_name" class="form-control" value="{{ old('full_name', $booking->full_name) }}" required>
@@ -604,7 +660,13 @@
                             <label class="form-label-custom">Contact Telephone</label>
                             <input type="text" name="contact" class="form-control" value="{{ old('contact', $booking->contact) }}" required>
                         </div>
+                    </div>
 
+                    <!-- Section: Logistics & Schedule -->
+                    <div class="form-section-title mt-4">
+                        <i class="bi bi-clock-history"></i> Scheduling & Resource Configuration
+                    </div>
+                    <div class="row g-4">
                         <div class="col-md-6">
                             <label class="form-label-custom">Check-In Activation Window</label>
                             <input type="datetime-local" name="booking_datetime" class="form-control" value="{{ old('booking_datetime', $booking->booking_datetime) }}" required>
@@ -617,7 +679,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label-custom">Number of Guests</label>
-                            <input type="number" name="guests" class="form-control" value="{{ old('guests', $booking->guests) }}" required>
+                            <input type="number" name="guests" class="form-control" value="{{ old('guests', $booking->guests) }}" min="1" required>
                         </div>
 
                         <div class="col-md-6">

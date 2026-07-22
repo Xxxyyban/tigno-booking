@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Manage Bookings — Enterprise Admin Dashboard</title>
+    <title>Manage Bookings Matrix — Enterprise Admin Dashboard</title>
 
     <!-- Bootstrap 5.3.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,13 +17,13 @@
 
     <style>
         :root {
-            --bg-base: #070b16;
-            --bg-surface: rgba(15, 23, 42, 0.75);
-            --bg-surface-hover: rgba(255, 255, 255, 0.06);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-glass-focus: rgba(255, 56, 92, 0.4);
+            --bg-base: #040711;
+            --bg-surface: rgba(13, 20, 36, 0.8);
+            --bg-surface-hover: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.09);
+            --border-glass-focus: rgba(255, 56, 92, 0.5);
             --primary: #ff385c;
-            --primary-glow: rgba(255, 56, 92, 0.25);
+            --primary-glow: rgba(255, 56, 92, 0.3);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --sidebar-width: 270px;
@@ -39,9 +39,9 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-base);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(30, 27, 75, 0.6) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 0.8) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(88, 28, 135, 0.15) 0%, transparent 60%);
+                radial-gradient(circle at 15% 15%, rgba(49, 36, 129, 0.45) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(15, 23, 42, 0.9) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(126, 34, 206, 0.1) 0%, transparent 70%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
@@ -62,11 +62,11 @@
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 56, 92, 0.6);
+            background: rgba(255, 56, 92, 0.7);
         }
 
         /* =========================
-            SIDEBAR STYLING
+           SIDEBAR STYLING
         ========================= */
         .sidebar {
             width: var(--sidebar-width);
@@ -75,8 +75,8 @@
             top: 0;
             left: 0;
             background: var(--bg-surface);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
             border-right: 1px solid var(--border-glass);
             padding: 24px 20px;
             z-index: 1040;
@@ -98,23 +98,23 @@
         }
 
         .sidebar-brand-icon {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, #ff385c, #e11d48);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px var(--primary-glow);
+            box-shadow: 0 10px 25px var(--primary-glow);
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .nav-menu {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .nav-item {
@@ -142,11 +142,11 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(255, 56, 92, 0.18), rgba(225, 29, 72, 0.08));
-            border: 1px solid rgba(255, 56, 92, 0.25);
+            background: linear-gradient(135deg, rgba(255, 56, 92, 0.2), rgba(225, 29, 72, 0.08));
+            border: 1px solid rgba(255, 56, 92, 0.3);
             color: #ff859b;
             font-weight: 600;
-            box-shadow: 0 4px 20px rgba(255, 56, 92, 0.1);
+            box-shadow: 0 4px 20px rgba(255, 56, 92, 0.12);
         }
 
         .sidebar-footer {
@@ -173,34 +173,104 @@
 
         .logout-btn:hover {
             background: rgba(239, 68, 68, 0.15);
-            border-color: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.35);
             color: #f87171;
             transform: translateY(-1px);
         }
 
         /* =========================
-            TOP NAVBAR STYLING
+           TOP NAVBAR STYLING
         ========================= */
         .admin-navbar {
             margin-left: var(--sidebar-width);
             height: var(--navbar-height);
             padding: 0 40px;
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(13, 20, 36, 0.6);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid var(--border-glass);
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 1030;
+        }
+
+        .admin-navbar-search {
+            position: relative;
+            width: 380px;
+        }
+
+        .admin-navbar-search input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            padding: 11px 16px 11px 44px;
+            border-radius: 14px;
+            color: white;
+            font-size: 0.88rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .admin-navbar-search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .admin-navbar-search input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--border-glass-focus);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .admin-navbar-search i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
         }
 
         .admin-nav-actions {
             display: flex;
             align-items: center;
             gap: 16px;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            position: relative;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-surface-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .icon-btn .badge-dot {
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
         }
 
         .admin-profile {
@@ -221,7 +291,7 @@
             justify-content: center;
             font-weight: 700;
             font-size: 0.9rem;
-            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.3);
+            box-shadow: 0 6px 20px rgba(147, 51, 234, 0.35);
             letter-spacing: 0.5px;
             color: #fff;
         }
@@ -238,16 +308,16 @@
         }
 
         /* =========================
-            MAIN CONTENT AREA
+           MAIN CONTENT AREA
         ========================= */
         .main-content {
             margin-left: var(--sidebar-width);
             padding: 40px;
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -269,21 +339,22 @@
             margin: 0;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             letter-spacing: -0.5px;
             color: #fff;
         }
 
         .page-title i {
             color: var(--primary);
-            filter: drop-shadow(0 4px 12px var(--primary-glow));
+            font-size: 1.4rem;
+            filter: drop-shadow(0 4px 15px var(--primary-glow));
         }
 
         .btn-dashboard {
             background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             color: white;
             text-decoration: none;
-            padding: 11px 20px;
+            padding: 12px 22px;
             border-radius: 14px;
             font-size: 0.88rem;
             font-weight: 600;
@@ -292,7 +363,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .btn-dashboard:hover {
@@ -303,17 +374,29 @@
         }
 
         /* =========================
-            CALENDAR PANEL (EXPANDED)
+           CALENDAR PANEL (EXPANDED)
         ========================= */
         .calendar-wrapper {
             background: var(--bg-surface);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--border-glass);
-            padding: 32px;
-            border-radius: 24px;
+            padding: 36px;
+            border-radius: 28px;
             margin-bottom: 35px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         #calendar {
@@ -327,7 +410,7 @@
             --fc-neutral-bg-color: rgba(255, 255, 255, 0.02);
             --fc-neutral-border-color: var(--border-glass);
             --fc-border-color: var(--border-glass);
-            --fc-today-bg-color: rgba(255, 56, 92, 0.08);
+            --fc-today-bg-color: rgba(255, 56, 92, 0.1);
             --fc-event-bg-color: var(--primary);
             --fc-event-border-color: var(--primary);
             --fc-list-event-hover-bg-color: rgba(255, 255, 255, 0.05);
@@ -335,13 +418,13 @@
         }
 
         .fc-toolbar-title {
-            font-size: 1.4rem !important;
+            font-size: 1.35rem !important;
             font-weight: 700 !important;
             letter-spacing: -0.3px;
         }
 
         .fc-button {
-            background: rgba(255, 255, 255, 0.05) !important;
+            background: rgba(255, 255, 255, 0.04) !important;
             border: 1px solid var(--border-glass) !important;
             color: white !important;
             border-radius: 12px !important;
@@ -353,7 +436,7 @@
         }
 
         .fc-button:hover {
-            background: rgba(255, 255, 255, 0.12) !important;
+            background: rgba(255, 255, 255, 0.08) !important;
             border-color: rgba(255, 255, 255, 0.2) !important;
         }
 
@@ -367,32 +450,74 @@
             color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             padding: 10px !important;
         }
 
         .fc-event {
             border-radius: 8px !important;
-            padding: 5px 8px !important;
+            padding: 6px 10px !important;
             font-size: 0.82rem !important;
             font-weight: 500 !important;
             border: none !important;
             background: linear-gradient(135deg, #ff385c, #e11d48) !important;
-            box-shadow: 0 4px 12px rgba(255, 56, 92, 0.25);
+            box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
             cursor: pointer;
         }
 
         /* =========================
-            DATA TABLE MATRIX
+           DATA TABLE MATRIX
         ========================= */
         .table-container {
             background: var(--bg-surface);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border: 1px solid var(--border-glass);
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        }
+
+        .table-toolbar {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .table-search {
+            position: relative;
+            flex-grow: 1;
+            max-width: 340px;
+        }
+
+        .table-search input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            padding: 10px 16px 10px 42px;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .table-search input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--border-glass-focus);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .table-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
         }
 
         .table-responsive {
@@ -410,18 +535,18 @@
         }
 
         .enterprise-table th {
-            background: rgba(7, 11, 22, 0.85);
+            background: rgba(4, 7, 17, 0.75);
             color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.75rem;
+            font-weight: 700;
+            font-size: 0.72rem;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            padding: 18px 20px;
+            letter-spacing: 1px;
+            padding: 18px 24px;
             border-bottom: 1px solid var(--border-glass);
         }
 
         .enterprise-table td {
-            padding: 18px 20px;
+            padding: 18px 24px;
             vertical-align: middle;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             font-size: 0.88rem;
@@ -436,14 +561,14 @@
         }
 
         .enterprise-table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .badge-room {
-            background: linear-gradient(135deg, rgba(255, 56, 92, 0.15), rgba(225, 29, 72, 0.05));
+            background: linear-gradient(135deg, rgba(255, 56, 92, 0.18), rgba(225, 29, 72, 0.06));
             border: 1px solid rgba(255, 56, 92, 0.3);
             color: #ff859b;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 600;
@@ -453,13 +578,13 @@
         .action-group {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .action-btn {
             width: 36px;
             height: 36px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -478,21 +603,21 @@
             border-color: rgba(37, 99, 235, 0.3); 
             color: #60a5fa; 
         }
-        .action-btn.view:hover { background: rgba(37, 99, 235, 0.3); color: #fff; }
+        .action-btn.view:hover { background: rgba(37, 99, 235, 0.35); color: #fff; }
 
         .action-btn.edit { 
             background: rgba(245, 158, 11, 0.15); 
             border-color: rgba(245, 158, 11, 0.3); 
             color: #fbbf24; 
         }
-        .action-btn.edit:hover { background: rgba(245, 158, 11, 0.3); color: #fff; }
+        .action-btn.edit:hover { background: rgba(245, 158, 11, 0.35); color: #fff; }
 
         .action-btn.delete {
             background: rgba(239, 68, 68, 0.15);
             border-color: rgba(239, 68, 68, 0.3);
             color: #f87171;
         }
-        .action-btn.delete:hover { background: rgba(239, 68, 68, 0.3); color: #fff; }
+        .action-btn.delete:hover { background: rgba(239, 68, 68, 0.35); color: #fff; }
 
         .file-link {
             display: inline-flex;
@@ -501,6 +626,7 @@
             color: #38bdf8;
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.85rem;
             transition: color 0.2s ease;
         }
         .file-link:hover {
@@ -510,17 +636,17 @@
 
         /* Alert Styling */
         .enterprise-alert {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, 0.12);
             border: 1px solid rgba(16, 185, 129, 0.3);
             color: #34d399;
-            padding: 16px 20px;
+            padding: 16px 22px;
             border-radius: 16px;
             font-weight: 500;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            backdrop-filter: blur(10px);
+            gap: 14px;
+            backdrop-filter: blur(15px);
         }
 
         /* Responsive Breakpoints */
@@ -600,9 +726,15 @@
        ADMIN TOP NAVIGATION BAR
     ========================= -->
     <header class="admin-navbar">
+        <div class="admin-navbar-search">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Global search workspace records...">
+        </div>
+
         <div class="admin-nav-actions">
-            <a href="#" class="icon-btn text-light text-decoration-none position-relative me-3" title="System Notifications">
-                <i class="bi bi-bell fs-5"></i>
+            <a href="#" class="icon-btn" title="System Notifications">
+                <i class="bi bi-bell"></i>
+                <span class="badge-dot"></span>
             </a>
 
             <div class="admin-profile">
@@ -634,11 +766,6 @@
                 </a>
             </div>
 
-            <!-- INTERACTIVE FULLCALENDAR MATRIX (EXPANDED) -->
-            <div class="calendar-wrapper">
-                <div id="calendar"></div>
-            </div>
-
             <!-- SUCCESS NOTIFICATION FEEDBACK -->
             @if(session('success'))
                 <div class="enterprise-alert">
@@ -647,10 +774,26 @@
                 </div>
             @endif
 
+            <!-- INTERACTIVE FULLCALENDAR MATRIX -->
+            <div class="calendar-wrapper">
+                <div id="calendar"></div>
+            </div>
+
             <!-- DATA RECORD TABLE -->
             <div class="table-container">
+                <div class="table-toolbar">
+                    <div class="fw-bold fs-6 text-white d-flex align-items-center gap-2">
+                        <i class="bi bi-table text-danger"></i> Active Bookings Ledger
+                    </div>
+                    
+                    <div class="table-search">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="tableSearchInput" placeholder="Filter booking entries...">
+                    </div>
+                </div>
+
                 <div class="table-responsive">
-                    <table class="enterprise-table">
+                    <table class="enterprise-table" id="bookingsTable">
                         <thead>
                             <tr>
                                 <th># ID</th>
@@ -735,10 +878,11 @@
     </main>
 
     <!-- =========================
-       CALENDAR INITIALIZATION SCRIPT
+       SCRIPTS & INITIALIZATIONS
     ========================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // FullCalendar Initialization
             const calendarEl = document.getElementById('calendar');
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -761,6 +905,20 @@
                 }
             });
             calendar.render();
+
+            // Real-Time Table Filter Script
+            const searchInput = document.getElementById('tableSearchInput');
+            const tableRows = document.querySelectorAll('#bookingsTable tbody tr');
+
+            if(searchInput) {
+                searchInput.addEventListener('keyup', function(e) {
+                    const term = e.target.value.toLowerCase();
+                    tableRows.forEach(row => {
+                        const text = row.textContent.toLowerCase();
+                        row.style.display = text.includes(term) ? '' : 'none';
+                    });
+                });
+            }
         });
     </script>
 </body>
