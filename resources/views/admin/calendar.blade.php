@@ -40,14 +40,14 @@ body {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.8);
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 /* =========================
@@ -59,10 +59,10 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(15, 23, 42, 0.65);
+    background: rgba(11, 17, 32, 0.9);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
     padding: 25px;
     z-index: 1040;
     display: flex;
@@ -77,12 +77,12 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #fff;
+    color: #ffffff;
     text-shadow: 0 2px 10px rgba(255, 56, 92, 0.3);
 }
 
 .sidebar-brand i {
-    color: #ff385c;
+    color: #ff859b;
     font-size: 1.4rem;
 }
 
@@ -97,7 +97,7 @@ body {
     padding: 12px 16px;
     margin-bottom: 8px;
     border-radius: 12px;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.9rem;
@@ -110,22 +110,22 @@ body {
 }
 
 .nav-item:hover, .nav-item.active {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transform: translateX(4px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .nav-item.active {
-    background: linear-gradient(135deg, rgba(255, 56, 92, 0.2), rgba(225, 29, 72, 0.1));
-    border-color: rgba(255, 56, 92, 0.3);
+    background: linear-gradient(135deg, rgba(255, 56, 92, 0.3), rgba(225, 29, 72, 0.2));
+    border-color: rgba(255, 56, 92, 0.4);
     color: #ff859b;
 }
 
 .sidebar-footer {
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* =========================
@@ -135,10 +135,10 @@ body {
     margin-left: 270px;
     height: 80px;
     padding: 0 35px;
-    background: rgba(15, 23, 42, 0.45);
+    background: rgba(11, 17, 32, 0.85);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -154,8 +154,8 @@ body {
 
 .admin-navbar-search input {
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 10px 15px 10px 42px;
     border-radius: 12px;
     color: white;
@@ -163,11 +163,15 @@ body {
     transition: all 0.3s ease;
 }
 
+.admin-navbar-search input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .admin-navbar-search input:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 56, 92, 0.5);
-    box-shadow: 0 0 15px rgba(255, 56, 92, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 56, 92, 0.6);
+    box-shadow: 0 0 15px rgba(255, 56, 92, 0.2);
 }
 
 .admin-navbar-search i {
@@ -175,7 +179,7 @@ body {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .admin-nav-actions {
@@ -185,15 +189,15 @@ body {
 }
 
 .icon-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     width: 42px;
     height: 42px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     position: relative;
     transition: all 0.2s ease;
     cursor: pointer;
@@ -201,7 +205,7 @@ body {
 }
 
 .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     color: white;
     transform: translateY(-2px);
 }
@@ -222,7 +226,7 @@ body {
     align-items: center;
     gap: 12px;
     padding-left: 15px;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .admin-avatar {
@@ -235,18 +239,20 @@ body {
     justify-content: center;
     font-weight: 600;
     font-size: 0.95rem;
-    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.4);
 }
 
 .admin-info .name {
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.2;
+    color: #ffffff;
 }
 
 .admin-info .role {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* =========================
@@ -276,6 +282,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: #ffffff;
 }
 
 .btn-dashboard {
@@ -304,12 +311,12 @@ body {
    CALENDAR BOX (GLASS)
 ========================= */
 #calendar {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 20px;
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
 }
@@ -317,24 +324,25 @@ body {
 /* FullCalendar Dark Customization overrides */
 .fc {
     --fc-page-bg-color: transparent;
-    --fc-neutral-bg-color: rgba(255, 255, 255, 0.03);
-    --fc-neutral-border-color: rgba(255, 255, 255, 0.08);
-    --fc-border-color: rgba(255, 255, 255, 0.08);
-    --fc-today-bg-color: rgba(255, 56, 92, 0.1);
+    --fc-neutral-bg-color: rgba(255, 255, 255, 0.04);
+    --fc-neutral-border-color: rgba(255, 255, 255, 0.1);
+    --fc-border-color: rgba(255, 255, 255, 0.1);
+    --fc-today-bg-color: rgba(255, 56, 92, 0.15);
     --fc-event-bg-color: #ff385c;
     --fc-event-border-color: #ff385c;
-    --fc-list-event-hover-bg-color: rgba(255, 255, 255, 0.06);
+    --fc-list-event-hover-bg-color: rgba(255, 255, 255, 0.08);
     color: white;
 }
 
 .fc-toolbar-title {
     font-size: 1.15rem !important;
     font-weight: 600;
+    color: #ffffff;
 }
 
 .fc-button {
     background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     color: white !important;
     border-radius: 10px !important;
     padding: 8px 14px !important;
@@ -345,23 +353,24 @@ body {
 
 .fc-button:hover {
     background: rgba(255, 255, 255, 0.15) !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
 .fc-button-active {
     background: #ff385c !important;
     border-color: #ff385c !important;
+    color: #ffffff !important;
 }
 
 .fc-col-header-cell-cushion, .fc-daygrid-day-number {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     font-weight: 500;
 }
 
 .logout {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 10px 16px;
     border-radius: 10px;
@@ -376,8 +385,8 @@ body {
 }
 
 .logout:hover {
-    background: rgba(255, 56, 92, 0.15);
-    border-color: rgba(255, 56, 92, 0.3);
+    background: rgba(255, 56, 92, 0.2);
+    border-color: rgba(255, 56, 92, 0.4);
     color: #ff859b;
 }
 
@@ -418,7 +427,7 @@ body {
 </div>
 
 <div class="nav-menu">
-<a href="/admin/dashboard" class="nav-item">
+<a href="{{ route('admin.dashboard') }}" class="nav-item">
 <i class="bi bi-speedometer2"></i>
 <span>Dashboard</span>
 </a>
@@ -433,14 +442,9 @@ body {
 <span>Calendar</span>
 </a>
 
-<a href="#" class="nav-item">
+<a href="{{ route('admin.users') }}" class="nav-item">
 <i class="bi bi-people"></i>
 <span>Users</span>
-</a>
-
-<a href="#" class="nav-item">
-<i class="bi bi-gear"></i>
-<span>Settings</span>
 </a>
 </div>
 
@@ -472,10 +476,6 @@ body {
 <span class="badge-dot"></span>
 </a>
 
-<a href="#" class="icon-btn" title="Settings">
-<i class="bi bi-gear"></i>
-</a>
-
 <div class="admin-profile">
 <div class="admin-avatar">AD</div>
 <div class="admin-info d-none d-md-block">
@@ -498,7 +498,7 @@ body {
     <div class="header">
 
         <h2>
-            <i class="bi bi-calendar3 text-danger"></i>
+            <i class="bi bi-calendar3" style="color: #ff859b;"></i>
             Booking Calendar (Admin)
         </h2>
 

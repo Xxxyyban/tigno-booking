@@ -36,22 +36,22 @@ body {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.8);
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 /* Glass Card Helper */
 .glass-panel {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(15, 23, 42, 0.75);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
@@ -64,10 +64,10 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(15, 23, 42, 0.65);
+    background: rgba(11, 17, 32, 0.9);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
     padding: 25px;
     z-index: 1040;
     display: flex;
@@ -82,12 +82,12 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #fff;
+    color: #ffffff;
     text-shadow: 0 2px 10px rgba(255, 56, 92, 0.3);
 }
 
 .sidebar-brand i {
-    color: #f0dce0;
+    color: #ff859b;
     font-size: 1.4rem;
 }
 
@@ -102,7 +102,7 @@ body {
     padding: 12px 16px;
     margin-bottom: 8px;
     border-radius: 12px;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.9rem;
@@ -115,22 +115,22 @@ body {
 }
 
 .nav-item:hover, .nav-item.active {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transform: translateX(4px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .nav-item.active {
-    background: linear-gradient(135deg, rgba(255, 56, 92, 0.2), rgba(225, 29, 72, 0.1));
-    border-color: rgba(255, 56, 92, 0.3);
+    background: linear-gradient(135deg, rgba(255, 56, 92, 0.3), rgba(225, 29, 72, 0.2));
+    border-color: rgba(255, 56, 92, 0.4);
     color: #ff859b;
 }
 
 .sidebar-footer {
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* =========================
@@ -140,10 +140,10 @@ body {
     margin-left: 270px;
     height: 80px;
     padding: 0 35px;
-    background: rgba(15, 23, 42, 0.45);
+    background: rgba(11, 17, 32, 0.85);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -159,8 +159,8 @@ body {
 
 .admin-navbar-search input {
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 10px 15px 10px 42px;
     border-radius: 12px;
     color: white;
@@ -168,11 +168,15 @@ body {
     transition: all 0.3s ease;
 }
 
+.admin-navbar-search input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .admin-navbar-search input:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 56, 92, 0.5);
-    box-shadow: 0 0 15px rgba(255, 56, 92, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 56, 92, 0.6);
+    box-shadow: 0 0 15px rgba(255, 56, 92, 0.2);
 }
 
 .admin-navbar-search i {
@@ -180,7 +184,7 @@ body {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .admin-nav-actions {
@@ -190,15 +194,15 @@ body {
 }
 
 .icon-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     width: 42px;
     height: 42px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     position: relative;
     transition: all 0.2s ease;
     cursor: pointer;
@@ -206,7 +210,7 @@ body {
 }
 
 .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     color: white;
     transform: translateY(-2px);
 }
@@ -227,7 +231,7 @@ body {
     align-items: center;
     gap: 12px;
     padding-left: 15px;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .admin-avatar {
@@ -240,18 +244,20 @@ body {
     justify-content: center;
     font-weight: 600;
     font-size: 0.95rem;
-    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.4);
 }
 
 .admin-info .name {
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.2;
+    color: #ffffff;
 }
 
 .admin-info .role {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* =========================
@@ -270,10 +276,11 @@ body {
     font-size: 1.6rem;
     font-weight: 700;
     margin-bottom: 5px;
+    color: #ffffff;
 }
 
 .welcome-banner p {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 0.9rem;
     margin: 0;
 }
@@ -282,13 +289,13 @@ body {
    PANELS
 ========================= */
 .panel {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 28px;
     border-radius: 20px;
-    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.4);
 }
 
 .panel-header {
@@ -306,12 +313,13 @@ body {
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    color: #ffffff;
 }
 
 .table-search-input {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 8px 14px;
     border-radius: 10px;
     color: white;
@@ -320,10 +328,14 @@ body {
     transition: all 0.3s ease;
 }
 
+.table-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .table-search-input:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 56, 92, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 56, 92, 0.6);
 }
 
 /* =========================
@@ -351,20 +363,20 @@ body {
 }
 
 .custom-table th {
-    color: rgba(255, 255, 255, 0.45);
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     background: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 0;
 }
 
 .custom-table tbody tr {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.04);
     transition: all 0.25s ease;
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .custom-table tbody tr td:first-child {
@@ -380,10 +392,10 @@ body {
 }
 
 .custom-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
     transform: translateY(-1px);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .user-cell-profile {
@@ -396,21 +408,22 @@ body {
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    background: rgba(255, 56, 92, 0.15);
+    background: rgba(255, 56, 92, 0.25);
     color: #ff859b;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
     font-size: 0.8rem;
+    border: 1px solid rgba(255, 56, 92, 0.4);
 }
 
 /* =========================
    BUTTONS
 ========================= */
 .logout {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 10px 16px;
     border-radius: 10px;
@@ -425,8 +438,8 @@ body {
 }
 
 .logout:hover {
-    background: rgba(255, 56, 92, 0.15);
-    border-color: rgba(255, 56, 92, 0.3);
+    background: rgba(255, 56, 92, 0.2);
+    border-color: rgba(255, 56, 92, 0.4);
     color: #ff859b;
 }
 
@@ -544,7 +557,7 @@ body {
         <div class="panel-header">
             <h4>
                 <span>Registered Users</span>
-                <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-25" style="font-size: 0.75rem; padding: 6px 12px; border-radius: 20px;">
+                <span class="badge" style="background: rgba(255, 56, 92, 0.25); border: 1px solid rgba(255, 56, 92, 0.5); color: #ff859b; font-size: 0.8rem; padding: 6px 14px; border-radius: 20px; font-weight: 600;">
                     {{ \App\Models\User::count() }} Total
                 </span>
             </h4>
@@ -572,10 +585,10 @@ body {
                                 <span style="font-weight: 500; color: #fff;">{{ $user->name }}</span>
                             </div>
                         </td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->created_at ? $user->created_at->format('M d, Y h:i A') : 'N/A' }}</td>
+                        <td style="color: rgba(255, 255, 255, 0.85);">{{ $user->email }}</td>
+                        <td style="color: rgba(255, 255, 255, 0.85);">{{ $user->created_at ? $user->created_at->format('M d, Y h:i A') : 'N/A' }}</td>
                         <td class="text-end">
-                            <button class="btn btn-sm btn-outline-light border-0" style="background: rgba(255,255,255,0.05);" title="View Details">
+                            <button class="btn btn-sm btn-outline-light border-0" style="background: rgba(255,255,255,0.08); color: #fff;" title="View Details">
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
                         </td>
