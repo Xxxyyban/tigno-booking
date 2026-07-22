@@ -562,7 +562,7 @@ body {
 <span>Calendar</span>
 </a>
 
-<a href="#" class="nav-item">
+<a href="{{ route('admin.users') }}" class="nav-item">
 <i class="bi bi-people"></i>
 <span>Users</span>
 </a>
